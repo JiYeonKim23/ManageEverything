@@ -110,35 +110,79 @@ public class Manage_Everything {
 		TodoList todoItem = HashMapTodoList.get(title);
 		System.out.println("1. Title, 2. Create date, 3. Due 4. Description");
 		System.out.print("수정하고 싶은 번호를 입력하시오 >> ");
-		int num = scanner.nextInt();
+		int num = scanner.nextInt();		//==================================오류 발생 가능성
 		if (num == 1) {
 			System.out.println("Title>");
-			String updated_title = scanner.next();
+			String updated_title = scanner.next();		//==================================오류 발생 가능성
 			todoItem.setTitle(updated_title);
 			HashMapTodoList.remove(title);
 			HashMapTodoList.put(updated_title, todoItem);
 		} else if (num == 2) {
 			System.out.println("생성날짜>");
-			String createDate = scanner.next();
+			String createDate = scanner.next();		//==================================오류 발생 가능성
 			todoItem.setCreate_date(createDate);
 			HashMapTodoList.remove(title);
 			HashMapTodoList.put(title,todoItem);
 		} else if (num == 3) {
 			System.out.println("마감날짜>");
-			String updated_due = scanner.next();
+			String updated_due = scanner.next();		//==================================오류 발생 가능성
 			todoItem.setDue(updated_due);
 			HashMapTodoList.remove(title);
 			HashMapTodoList.put(title,todoItem);
 			
 		} else if (num == 4) {
 			System.out.println("상세설명>");
-			String updated_description = scanner.next();
+			String updated_description = scanner.next();		//==================================오류 발생 가능성
 			todoItem.setDescription(updated_description);
 			HashMapTodoList.remove(title);
 			HashMapTodoList.put(title,todoItem);
 		}
 		return 1;
 	}
+	
+	private static void file_store(String address) {
+		Set<String> keys = HashMapTodoList.keySet();
+		Iterator<String> it = keys.iterator();
+		try {
+			FileWriter fout = new FileWriter(address);
+			while (it.hasNext()) {
+				String name = it.next();
+				TodoList list = new TodoList();
+				list = HashMapTodoList.get(name);
+				String line = name + "," + list.getCreate_date() + "," + list.getDue() + "," + list.getDescription();
+				fout.write(line, 0, line.length());
+				fout.write("\r\n", 0, 2);
+			}
+			fout.close();
+			// System.out.println(address+"에 저장되었습니다.");
+		} catch (Exception e) {
+			return;
+		}
+	}
+	
+	private static void file_open(String address) {
+		try {
+			Scanner scan = new Scanner(new FileReader(address));
+			while (scan.hasNextLine()) {
+				String line = scan.nextLine();
+				
+				StringTokenizer st = new StringTokenizer(line,",");
+				TodoList item = new TodoList();
+				item.setTitle(st.nextToken());
+				item.setCreate_date(st.nextToken());
+				item.setDue(st.nextToken());
+				item.setDescription(st.nextToken());
+				//item.setDescription(Integer.parseInt(st.nextToken()));
+				HashMapTodoList.put(item.getTitle(), item);
+			}
+			scan.close();
+			//System.out.println(address+"로부터 정보를 불러왔습니다.");
+		}
+		catch(IOException e) {
+			//System.out.println("입출력오류");
+		}
+	}
+	
 	//==============================Appointment=====================================
 	public static int appoCreate() {
 		//성공 시 1 반환
@@ -172,7 +216,8 @@ public class Manage_Everything {
 			int num = scanner.nextInt();
 			if (num >= 1 && num <= 5)
 				scanner.nextLine();
-			// file_open();
+			String address = "c:\\Temp\\todoList.txt";
+			file_open(address);
 			if (num == 1) { // 생성
 				todoCreate();
 			} else if (num == 2) { // 보기
@@ -182,10 +227,10 @@ public class Manage_Everything {
 			} else if (num == 4) { // 삭제
 				todoDelete();
 			} else if (num == 5) { // 종료
-				// file_store();
+				file_store(address);
 				break;
 			}
-			// file_store();
+			//file_store(address);	//여긴 사실 필요없을 수도 있음
 		}
 	}
 	public static void main_appointment() {
