@@ -119,7 +119,6 @@ public class Manage_Everything {
 			System.out.print("Enter 0 >> ");
 			continue;
 		}
-		return 1;
 
 	}
 	public static int appoUpdate() {
@@ -253,7 +252,7 @@ public class Manage_Everything {
 		// TODO Auto-generated method stub
 		while(true) {
 			System.out.print("1. Manage contact, 2. Manage to do list, 3. Manage appointment, 4. Exit\n원하시는 메뉴의 번호를 입력하세요>>");
-			int num=scanner.nextInt();
+			int num = Integer.parseInt(scanner.nextLine());
 			if ( num==1)
 				main_contact();
 			else if ( num==2 )
