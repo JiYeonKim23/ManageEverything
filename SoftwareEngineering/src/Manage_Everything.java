@@ -6,7 +6,6 @@ class contact {
 }
 
 class todoList{
-	
 }
 
 class Appointment{
@@ -14,6 +13,7 @@ class Appointment{
 }
 
 public class Manage_Everything {
+	static Scanner scanner = new Scanner(System.in);
 	//==============================contact=====================================
 	public static int contactCreate() {
 		//성공 시 1 반환
@@ -88,6 +88,17 @@ public class Manage_Everything {
 	//===================================================================
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		while(true) {
+			int num=scanner.nextInt();
+			if ( num==1)
+				main_contact();
+			else if ( num==2 )
+				main_todolist();
+			else if ( num==3 )
+				main_appointment();
+			else if ( num==4 )
+				break;
+		}
+	
 	}
 }
