@@ -6,6 +6,19 @@ class contact {
 }
 
 class todoList{
+	private String title;
+	private String create_date;
+	private String due;
+	private String description;
+	
+	public String getTitle() {return title;	}
+	public void setTitle(String title) {this.title = title;}
+	public String getCreate_date() {return create_date; }
+	public void setCreate_date(String create_date) {this.create_date = create_date;	}
+	public String getDue() {return due;}
+	public void setDue(String due) {this.due = due;}
+	public String getDescription() {return description;}
+	public void setDescription(String description) {this.description = description;	}
 }
 
 class Appointment{
