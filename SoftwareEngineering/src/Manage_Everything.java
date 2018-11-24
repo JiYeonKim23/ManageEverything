@@ -2,16 +2,6 @@ import java.io.*;
 import java.util.*;
 
 class Contact {
-	private String name;
-	private String number;
-	private String email;
-	
-	public String getName() {return name;}
-	public void setName() {this.name = name;}
-	public String getNumber() {return number;}
-	public void setNumber() {this.name = number;}
-	public String getEmail() {return email;}
-	public void setEmail() {this.name = email;}
 }
 
 class todoList{
@@ -22,87 +12,23 @@ class Appointment{
 }
 
 public class Manage_Everything {
-	static Scanner scanner = new Scanner(System.in);
-	static Hashmap<String, Contact> contactList = new
-			Hashmap<String, Contact>();
-	static FileWriter fout = null;
-	FileReader fin = null;
-	static String contactAddress = "C:\\Temp\\Contact.txt"
 	//==============================contact=====================================
 	public static int contactCreate() {
-		//¼º°ø ½Ã 1 ¹ÝÈ¯
-		//½ÇÆÐ ½Ã 0 ¹ÝÈ¯
-		Contact contact = new contact();
-		System.out.print("ÀÌ¸§: ");
-		String name = scanner.nextLine();
-		if (contactList.get(name)==null) {
-			contact.setName(name);
-		}
-		else {
-			System.out.println("Áßº¹µÇ´Â ÀÌ¸§ÀÔ´Ï´Ù.");
-			return;
-		}
-		
-		System.out.print("ÀüÈ­¹øÈ£: ");
-		contact.setNumber(scanner.nextLine());
-		System.out.print("Email: ");
-		contact.setEmail(scanner.nextLine());
-		contactList.put(name, Contact);
-		
+		//ì„±ê³µ ì‹œ 1 ë°˜í™˜
+		//ì‹¤íŒ¨ ì‹œ 0 ë°˜í™˜
 		return 0;
 	}
 	public static int contactDelete() {
-		//¼º°ø ½Ã 1 ¹ÝÈ¯
-		//½ÇÆÐ ½Ã 0 ¹ÝÈ¯
-		System.out.print("ÀÌ¸§ ÀÔ·Â: ");
-		String contactName = scanner.nextLine();
-		if (contactList.get(name)==null) 
-			System.out.println("That contact doesn't exist");
-		else {
-			Contact contact = new Contact();
-			contact = contactList.get(name);
-			contactList.remove(name);
-			System.out.println("delete success");
-		}
+		//ì„±ê³µ ì‹œ 1 ë°˜í™˜
+		//ì‹¤íŒ¨ ì‹œ 0 ë°˜í™˜
 		return 0;
 	}
 	public static void contactView() {
-		Set<String> keys = contactList.keySet();
-		Iterator<String> it = keys.iterator();
-		while (it.hasNext()) {
-			String name = it.next();
-			Contact contact = new Contact();
-			contact = contactList.get(name);
-			System.out.println("[ÀÌ¸§: " + name + 
-					" ÀüÈ­¹øÈ£: " + contact.getNumber() +
-					" Email: " + contact.getEmail() + "]");
-		}
 		
 	}
 	public static int contactUpdate() {
-		//¼º°ø ½Ã 1 ¹ÝÈ¯
-		//½ÇÆÐ ½Ã 0 ¹ÝÈ¯
-		System.out.print("ÀÌ¸§: ");
-		String name = scanner.nextLine();
-		if (contactList.get(name)==null) {
-			System.out.println("That contact doesn't exist");
-		}
-		else {
-			Contact contact = new Contact();
-			contact = contactList.get(name);
-			System.out.println("1. Name, 2.Phone number, 3. E-mail");
-			int num = scanner.nextInt();
-			System.out.print("Enter what you want to update": );
-			if (num == 1) {
-				contact.setName(scanner.nextLine());
-			}
-			else if (num == 2) {
-				contact.setNumber(scanner.nextLine());
-			}
-			else if (num == 3) {
-				contact.setEmail(scanner.nextLine());
-			}
-		}
+		//ì„±ê³µ ì‹œ 1 ë°˜í™˜
+		//ì‹¤íŒ¨ ì‹œ 0 ë°˜í™˜
 		
 		return 0;
 	}
@@ -110,69 +36,46 @@ public class Manage_Everything {
 	
 	//==============================todoList=====================================
 	public static int todoCreate() {
-		//¼º°ø ½Ã 1 ¹ÝÈ¯
-		//½ÇÆÐ ½Ã 0 ¹ÝÈ¯
+		//ì„±ê³µ ì‹œ 1 ë°˜í™˜
+		//ì‹¤íŒ¨ ì‹œ 0 ë°˜í™˜
 		return 0;
 	}
 	public static int todoDelete() {
-		//¼º°ø ½Ã 1 ¹ÝÈ¯
-		//½ÇÆÐ ½Ã 0 ¹ÝÈ¯
+		//ì„±ê³µ ì‹œ 1 ë°˜í™˜
+		//ì‹¤íŒ¨ ì‹œ 0 ë°˜í™˜
 		return 0;
 	}
 	public static void todoView() {
 		
 	}
 	public static int todoUpdate() {
-		//¼º°ø ½Ã 1 ¹ÝÈ¯
-		//½ÇÆÐ ½Ã 0 ¹ÝÈ¯
+		//ì„±ê³µ ì‹œ 1 ë°˜í™˜
+		//ì‹¤íŒ¨ ì‹œ 0 ë°˜í™˜
 		return 0;
 	}
 	//==============================Appointment=====================================
 	public static int appoCreate() {
-		//¼º°ø ½Ã 1 ¹ÝÈ¯
-		//½ÇÆÐ ½Ã 0 ¹ÝÈ¯
+		//ì„±ê³µ ì‹œ 1 ë°˜í™˜
+		//ì‹¤íŒ¨ ì‹œ 0 ë°˜í™˜
 		return 0;
 	}
 	public static int appoDelete() {
-		//¼º°ø ½Ã 1 ¹ÝÈ¯
-		//½ÇÆÐ ½Ã 0 ¹ÝÈ¯
+		//ì„±ê³µ ì‹œ 1 ë°˜í™˜
+		//ì‹¤íŒ¨ ì‹œ 0 ë°˜í™˜
 		return 0;
 	}
 	public static void appoView() {
 
 	}
 	public static int appoUpdate() {
-		//¼º°ø ½Ã 1 ¹ÝÈ¯
-		//½ÇÆÐ ½Ã 0 ¹ÝÈ¯
+		//ì„±ê³µ ì‹œ 1 ë°˜í™˜
+		//ì‹¤íŒ¨ ì‹œ 0 ë°˜í™˜
 		return 0;
 	}
 	
 	//==============================main=====================================
 	public static void main_contact() {
-		Scanner scanner = new Scanner(System.in);
-		int numOfContactMenu;
 		
-		file_open();
-		
-		System.out.print("\n1. Create, 2. View, 3. Update, 4. Delete, 5. Return to main");
-		numOfContactMenu = scanner.nextInt();
-		
-		while (numOfContactMenu != 5) {
-			if (numOfContactMenu == 1)
-				contactCreate();
-			else if (numOfContactMenu == 2)
-				contactView();
-			else if (numOfContactMenu == 3)
-				contactUpdate();
-			else if (numOfContactMenu == 4)
-				contactDelete();
-		
-			System.out.print("\n1. Create, 2. View, 3. Update, 4. Delete, 5. Return to main");
-			numOfContactMenu = scanner.nextInt();
-		}
-		
-		file_store();
-		scanner.close();
 	}
 	public static void main_todolist() {
 
