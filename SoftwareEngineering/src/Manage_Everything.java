@@ -23,16 +23,28 @@ class Appointment{
 
 public class Manage_Everything {
 	static Scanner scanner = new Scanner(System.in);
-	static HashMap<String, Contact> contactList = new
+	static HashMap<String, Contact> HashmapContact = new
 			Hashmap<String, Contact>();
 	//==============================contact=====================================
+	private static String contactSearch() {	
+		System.out.print("이름 입력:");
+		String name = scanner.nextLine();
+		if (HashMapContact.get(name)==null) { //해당 이름이 없을 경우
+			System.out.println("해당하는 연락처가 없습니다.");
+			return "0";
+		}
+		else {
+			return name;
+		}
+	}
+	
 	public static int contactCreate() {
 		//성공 시 1 반환
 		//실패 시 0 반환
 		Contact contact = new contact();
 		System.out.print("이름: ");
 		String name = scanner.nextLine();
-		if (contactList.get(name)==null) {
+		if (HashmapContact.get(name)==null) {
 			contact.setName(name);
 		}
 		else {
@@ -44,26 +56,20 @@ public class Manage_Everything {
 		contact.setNumber(scanner.nextLine());
 		System.out.print("E-mail: ");
 		contact.setEmail(scanner.nextLine());
-		contactList.put(name, Contact);
+		HashmapContact.put(name, Contact);
 		
 		return 1;
 	}
 	public static int contactDelete() {
 		//성공 시 1 반환
 		//실패 시 0 반환
-		System.out.print("이름 입력: ");
-		String contactName = scanner.nextLine();
-		if (contactList.get(name)==null) {
-			System.out.println("That contact doesn't exist");
+		String name = contactSearch();
+		if ( name=="0")//없다면
 			return 0;
-		}
 		else {
-			Contact contact = new Contact();
-			contact = contactList.get(name);
-			contactList.remove(name);
-			System.out.println("delete success");
+			HashMapContact.remove(title);
+			return 1;
 		}
-		return 1;
 	}
 	public static void contactView() {
 		Set<String> keys = contactList.keySet();
@@ -71,7 +77,7 @@ public class Manage_Everything {
 		while (it.hasNext()) {
 			String name = it.next();
 			Contact contact = new Contact();
-			contact = contactList.get(name);
+			contact = HashmapContact.get(name);
 			System.out.println("[이름: " + name + 
 					" 전화번호: " + contact.getNumber() +
 					" Email: " + contact.getEmail() + "]");
@@ -81,41 +87,33 @@ public class Manage_Everything {
 	public static int contactUpdate() {
 		//성공 시 1 반환
 		//실패 시 0 반환
-		System.out.print("이름: ");
-		String name = scanner.nextLine();
-		if (contactList.get(name)==null) {
-			System.out.println("That contact doesn't exist");
+		String name = contactSearch();
+		if (name == "0")
 			return 0;
+		// 수정하고 싶은 것을 입력받은 후 결정
+		Contact contact = HashMapContact.get(name);
+		System.out.println("1. Name, 2. Phone number, 3. E-mail");
+		System.out.print("수정하고 싶은 번호를 입력하시오 >> ");
+		int num = scanner.nextInt();		//==================================오류 발생 가능성
+		if (num == 1) {
+			System.out.println("Name>");
+			String updated_name = scanner.next();		//==================================오류 발생 가능성
+			todoContact.setName(updated_name);
+			HashMapContact.remove(name);
+			HashMapContact.put(updated_name, contact);
+		} else if (num == 2) {
+			System.out.println("Phone number>");
+			String number = scanner.next();		//==================================오류 발생 가능성
+			contact.setNumber(number);
+			HashMapContact.remove(name);
+			HashMapContact.put(name,contact);
+		} else if (num == 3) {
+			System.out.println("E-mail>");
+			String email = scanner.next();		//==================================오류 발생 가능성
+			contact.setEmail(email);
+			HashMapContact.remove(name);
+			HashMapContact.put(name,contact);
 		}
-		else {
-			Contact contact = new Contact();
-			contact = contactList.get(name);
-			System.out.println("1. Name, 2.Phone number, 3. E-mail");
-			int num = scanner.nextInt();
-			System.out.print("Enter what you want to update": );
-			if (num == 1) {
-				System.out.print("Name>");
-				String updated_name = scanner.next();
-				contact.setName(updated_name);
-				contactList.remove(name);
-				contactList.put(updated_name, contact);
-			}
-			else if (num == 2) {
-				System.out.print("Phone number>");
-				String updated_number = scanner.next();
-				contact.setNumber(updated_number);
-				contactList.remove(number);
-				contactList.put(updated_number, contact);
-			}
-			else if (num == 3) {System.out.print("E-mail>");
-				System.out.print("E-mail>");
-				String updated_email = scanner.next();
-				contact.setEmail(updated_email);
-				contactList.remove(email);
-				contactList.put(updated_email, contact);
-			}
-		}
-		
 		return 1;
 	}
 	
