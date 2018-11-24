@@ -25,8 +25,6 @@ public class Manage_Everything {
 	static Scanner scanner = new Scanner(System.in);
 	static Hashmap<String, Contact> contactList = new
 			Hashmap<String, Contact>();
-	static FileWriter fout = null;
-	FileReader fin = null;
 	static String contactAddress = "C:\\Temp\\Contact.txt"
 	//==============================contact=====================================
 	public static int contactCreate() {
