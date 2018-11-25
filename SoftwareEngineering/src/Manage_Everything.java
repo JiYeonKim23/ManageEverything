@@ -163,7 +163,7 @@ public class Manage_Everything {
 		}
 
 	}
-	static void file_open_appointment() {
+	private static void file_open_appointment() {
 		try {
 			Scanner scan = new Scanner(new FileReader(appointment));
 			while(scan.hasNextLine()) {
@@ -181,7 +181,7 @@ public class Manage_Everything {
 		}
 	}
 	
-	static void file_store_appointment() {
+	private static void file_store_appointment() {
 		Set<String> keys = appointList.keySet();
 		Iterator <String> it = keys.iterator();
 		try {
@@ -200,7 +200,7 @@ public class Manage_Everything {
 		}
 	}
 	
-	static String search_appointment() {
+	private static String search_appointment() {
 		String title = scanner.nextLine();
 		if(appointList.get(title)==null) {
 			return "0";
