@@ -12,9 +12,6 @@ class Appointment{
 }
 
 public class Manage_Everything {
-	static Scanner scanner = new Scanner(System.in);
-	static HashMap<String, Contact> contactList = new
-			Hashmap<String, Contact>();
 	//==============================contact=====================================
 	public static int contactCreate() {
 		//성공 시 1 반환
