@@ -209,15 +209,15 @@ public class Manage_Everything {
 	}
 
 	public static void main_todolist() {
-		while (true) {
+		String address = "c:\\Temp\\todoList.txt";
+		file_open(address);
+			while (true) {
 			System.out.println("======================================================================");
 			System.out.println("======================================================================");
 			System.out.print("1.Create 2.View 3.Update 4.Delete 5.Return to main\n메뉴입력>>");
 			int num = scanner.nextInt();
 			if (num >= 1 && num <= 5)
 				scanner.nextLine();
-			String address = "c:\\Temp\\todoList.txt";
-			file_open(address);
 			if (num == 1) { // 생성
 				todoCreate();
 			} else if (num == 2) { // 보기
@@ -230,7 +230,8 @@ public class Manage_Everything {
 				file_store(address);
 				break;
 			}
-			//file_store(address);	//여긴 사실 필요없을 수도 있음
+			file_store(address);	//file_open()이 while문 안에 있으면, 이 코드가 꼭 있어야 함
+			//지금은 file_open()이 while문 밖에 있으므로 꼭 필요한 문장은 아니지만, 비정상 종료를 막기 위해 존재
 		}
 	}
 	public static void main_appointment() {
