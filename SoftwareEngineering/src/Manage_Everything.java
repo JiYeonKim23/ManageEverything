@@ -9,7 +9,11 @@ class todoList{
 }
 
 class Appointment{
-	private String title, date, persons, location;
+	private String title;
+	private String date;
+	private String persons;
+	private String location;
+	
 	public String getTitle() {return title;}
 	public void setTitle(String title) {this.title = title;}
 	public String getDate() {return date;}
@@ -18,7 +22,6 @@ class Appointment{
 	public void setPersons(String persons) {this.persons = persons;}
 	public String getLocation() {return location;}
 	public void setLocation(String location) {this.location = location;}
-
 }
 
 public class Manage_Everything {
