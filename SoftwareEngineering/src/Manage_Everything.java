@@ -5,7 +5,6 @@ class Contact {
 	private String name;
 	private String number;
 	private String email;
-	
 	public String getName() {return name;}
 	public void setName() {this.name = name;}
 	public String getNumber() {return number;}
@@ -27,10 +26,10 @@ public class Manage_Everything {
 			Hashmap<String, Contact>();
 	//==============================contact=====================================
 	private static String contactSearch() {	
-		System.out.print("이름 입력:");
+		System.out.print("Enter name:");
 		String name = scanner.nextLine();
 		if (HashMapContact.get(name)==null) { //해당 이름이 없을 경우
-			System.out.println("해당하는 연락처가 없습니다.");
+			System.out.println("No corresponding name exists.");
 			return "0";
 		}
 		else {
@@ -42,17 +41,17 @@ public class Manage_Everything {
 		//성공 시 1 반환
 		//실패 시 0 반환
 		Contact contact = new contact();
-		System.out.print("이름: ");
+		System.out.print("Name: ");
 		String name = scanner.nextLine();
 		if (HashmapContact.get(name)==null) {
 			contact.setName(name);
 		}
 		else {
-			System.out.println("중복되는 이름입니다. 다시 입력하십시오.");
+			System.out.println("This is a duplicate name. Please re-enter.");
 			return 0;
 		}
 		
-		System.out.print("전화번호: ");
+		System.out.print("Phone number: ");
 		contact.setNumber(scanner.nextLine());
 		System.out.print("E-mail: ");
 		contact.setEmail(scanner.nextLine());
@@ -78,9 +77,9 @@ public class Manage_Everything {
 			String name = it.next();
 			Contact contact = new Contact();
 			contact = HashmapContact.get(name);
-			System.out.println("[이름: " + name + 
-					" 전화번호: " + contact.getNumber() +
-					" Email: " + contact.getEmail() + "]");
+			System.out.println("[Name: " + name + 
+					" Phone number: " + contact.getNumber() +
+					" E-mail: " + contact.getEmail() + "]");
 		}
 		
 	}
@@ -93,7 +92,7 @@ public class Manage_Everything {
 		// 수정하고 싶은 것을 입력받은 후 결정
 		Contact contact = HashMapContact.get(name);
 		System.out.println("1. Name, 2. Phone number, 3. E-mail");
-		System.out.print("수정하고 싶은 번호를 입력하시오 >> ");
+		System.out.print("Enter the number you want to modify>>");
 		int num = scanner.nextInt();		//==================================오류 발생 가능성
 		if (num == 1) {
 			System.out.println("Name>");
