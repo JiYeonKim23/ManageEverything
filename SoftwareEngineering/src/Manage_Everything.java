@@ -110,29 +110,30 @@ public class Manage_Everything {
 		TodoList todoItem = HashMapTodoList.get(title);
 		System.out.println("1. Title, 2. Create date, 3. Due 4. Description");
 		System.out.print("수정하고 싶은 번호를 입력하시오 >> ");
-		int num = scanner.nextInt();		//==================================오류 발생 가능성
+		int num=Integer.parseInt(scanner.nextLine());	//왜 이렇게 바꿔야 하는 지 모르겠음
+		//int num = scanner.nextInt();		//오류 발생
 		if (num == 1) {
 			System.out.println("Title>");
-			String updated_title = scanner.next();		//==================================오류 발생 가능성
+			String updated_title = scanner.nextLine();	
 			todoItem.setTitle(updated_title);
 			HashMapTodoList.remove(title);
 			HashMapTodoList.put(updated_title, todoItem);
 		} else if (num == 2) {
 			System.out.println("생성날짜>");
-			String createDate = scanner.next();		//==================================오류 발생 가능성
+			String createDate = scanner.nextLine();
 			todoItem.setCreate_date(createDate);
 			HashMapTodoList.remove(title);
 			HashMapTodoList.put(title,todoItem);
 		} else if (num == 3) {
 			System.out.println("마감날짜>");
-			String updated_due = scanner.next();		//==================================오류 발생 가능성
+			String updated_due = scanner.nextLine();
 			todoItem.setDue(updated_due);
 			HashMapTodoList.remove(title);
 			HashMapTodoList.put(title,todoItem);
 			
 		} else if (num == 4) {
 			System.out.println("상세설명>");
-			String updated_description = scanner.next();		//==================================오류 발생 가능성
+			String updated_description = scanner.nextLine();
 			todoItem.setDescription(updated_description);
 			HashMapTodoList.remove(title);
 			HashMapTodoList.put(title,todoItem);
