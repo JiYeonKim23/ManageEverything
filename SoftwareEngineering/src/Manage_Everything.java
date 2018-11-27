@@ -114,74 +114,49 @@ public class Manage_Everything {
 			HashMapContact.put(name,contact);
 		}
 		return 1;
+		return 0;
+	}
+	public static int contactDelete() {
+		return 0;
+	}
+	public static void contactView() {
+		
+	}
+	public static int contactUpdate() {
+		return 0;
 	}
 	
 	
 	//==============================todoList=====================================
 	public static int todoCreate() {
-		//성공 시 1 반환
-		//실패 시 0 반환
 		return 0;
 	}
 	public static int todoDelete() {
-		//성공 시 1 반환
-		//실패 시 0 반환
 		return 0;
 	}
 	public static void todoView() {
 		
 	}
 	public static int todoUpdate() {
-		//성공 시 1 반환
-		//실패 시 0 반환
 		return 0;
 	}
 	//==============================Appointment=====================================
 	public static int appoCreate() {
-		//성공 시 1 반환
-		//실패 시 0 반환
 		return 0;
 	}
 	public static int appoDelete() {
-		//성공 시 1 반환
-		//실패 시 0 반환
 		return 0;
 	}
 	public static void appoView() {
 
 	}
 	public static int appoUpdate() {
-		//성공 시 1 반환
-		//실패 시 0 반환
 		return 0;
 	}
 	
 	//==============================main=====================================
 	public static void main_contact() {
-		Scanner scanner = new Scanner(System.in);
-		int numOfContactMenu;
 		
-		file_open();
-		
-		System.out.print("\n1. Create, 2. View, 3. Update, 4. Delete, 5. Return to main");
-		numOfContactMenu = scanner.nextInt();
-		
-		while (numOfContactMenu != 5) {
-			if (numOfContactMenu == 1)
-				contactCreate();
-			else if (numOfContactMenu == 2)
-				contactView();
-			else if (numOfContactMenu == 3)
-				contactUpdate();
-			else if (numOfContactMenu == 4)
-				contactDelete();
-		
-			System.out.print("\n1. Create, 2. View, 3. Update, 4. Delete, 5. Return to main");
-			numOfContactMenu = scanner.nextInt();
-		}
-		
-		file_store();
-		scanner.close();
 	}
 	public static void main_todolist() {
 
