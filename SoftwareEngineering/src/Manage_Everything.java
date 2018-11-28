@@ -1,15 +1,16 @@
-import java.util.HashMap;
+import java.util.*;
+import java.io.*;
 
 class Contact {
 	private String name;
 	private String number;
 	private String email;
 	public String getName() {return name;}
-	public void setName() {this.name = name;}
+	public void setName(String name) {this.name = name;}
 	public String getNumber() {return number;}
-	public void setNumber() {this.name = number;}
+	public void setNumber(String number) {this.number = number;}
 	public String getEmail() {return email;}
-	public void setEmail() {this.name = email;}
+	public void setEmail(String email) {this.email = email;}
 }
 
 class todoList{
@@ -35,19 +36,18 @@ class Appointment{
 public class Manage_Everything {
 	static Scanner scanner = new Scanner(System.in);
 	static HashMap<String, Contact> HashmapContact = new
-			Hashmap<String, Contact>();
-<<<<<<< HEAD
-=======
+			HashMap<String, Contact>();
+
 	static HashMap<String,Appointment> appointList = new HashMap<String, Appointment>();
 	static FileWriter fout = null;
 	FileReader fin = null;
 	static String appointment = "c:\\Temp\\appointment.txt";
->>>>>>> appointment
+
 	//==============================contact=====================================
 	private static String contactSearch() {	
 		System.out.print("Enter name:");
 		String name = scanner.nextLine();
-		if (HashMapContact.get(name)==null) { //해당 이름이 없을 경우
+		if (HashmapContact.get(name)==null) { //해당 이름이 없을 경우
 			System.out.println("No corresponding name exists.");
 			return "0";
 		}
@@ -59,7 +59,7 @@ public class Manage_Everything {
 	public static int contactCreate() {
 		//성공 시 1 반환
 		//실패 시 0 반환
-		Contact contact = new contact();
+		Contact contact = new Contact();
 		System.out.print("Name: ");
 		String name = scanner.nextLine();
 		if (HashmapContact.get(name)==null) {
@@ -74,7 +74,7 @@ public class Manage_Everything {
 		contact.setNumber(scanner.nextLine());
 		System.out.print("E-mail: ");
 		contact.setEmail(scanner.nextLine());
-		HashmapContact.put(name, Contact);
+		HashmapContact.put(name, contact);
 		
 		return 1;
 	}
@@ -85,12 +85,12 @@ public class Manage_Everything {
 		if ( name=="0")//없다면
 			return 0;
 		else {
-			HashMapContact.remove(title);
+			HashmapContact.remove(name);
 			return 1;
 		}
 	}
 	public static void contactView() {
-		Set<String> keys = contactList.keySet();
+		Set<String> keys = HashmapContact.keySet();
 		Iterator<String> it = keys.iterator();
 		while (it.hasNext()) {
 			String name = it.next();
@@ -109,42 +109,31 @@ public class Manage_Everything {
 		if (name == "0")
 			return 0;
 		// 수정하고 싶은 것을 입력받은 후 결정
-		Contact contact = HashMapContact.get(name);
+		Contact contact = HashmapContact.get(name);
 		System.out.println("1. Name, 2. Phone number, 3. E-mail");
 		System.out.print("Enter the number you want to modify>>");
 		int num = scanner.nextInt();		//==================================오류 발생 가능성
 		if (num == 1) {
 			System.out.println("Name>");
 			String updated_name = scanner.next();		//==================================오류 발생 가능성
-			todoContact.setName(updated_name);
-			HashMapContact.remove(name);
-			HashMapContact.put(updated_name, contact);
+			contact.setName(updated_name);
+			HashmapContact.remove(name);
+			HashmapContact.put(updated_name, contact);
 		} else if (num == 2) {
 			System.out.println("Phone number>");
 			String number = scanner.next();		//==================================오류 발생 가능성
 			contact.setNumber(number);
-			HashMapContact.remove(name);
-			HashMapContact.put(name,contact);
+			HashmapContact.remove(name);
+			HashmapContact.put(name,contact);
 		} else if (num == 3) {
 			System.out.println("E-mail>");
 			String email = scanner.next();		//==================================오류 발생 가능성
 			contact.setEmail(email);
-			HashMapContact.remove(name);
-			HashMapContact.put(name,contact);
+			HashmapContact.remove(name);
+			HashmapContact.put(name,contact);
 		}
 		return 1;
-		return 0;
 	}
-	public static int contactDelete() {
-		return 0;
-	}
-	public static void contactView() {
-		
-	}
-	public static int contactUpdate() {
-		return 0;
-	}
-	
 	
 	//==============================todoList=====================================
 	public static int todoCreate() {
@@ -161,9 +150,7 @@ public class Manage_Everything {
 	}
 	//==============================Appointment=====================================
 	public static int appoCreate() {
-<<<<<<< HEAD
-		return 0;
-=======
+
 		Appointment app = new Appointment();
 		System.out.print("title >> ");
 		String title = scanner.nextLine();
@@ -182,13 +169,10 @@ public class Manage_Everything {
 		appointList.put(app.getTitle(), app);
 		System.out.println("create success");
 		return 1;
->>>>>>> appointment
 	}
 	
 	public static int appoDelete() {
-<<<<<<< HEAD
-		return 0;
-=======
+
 		System.out.print("title >> ");
 		String title = search_appointment();
 		if(title == "0") {
@@ -200,7 +184,6 @@ public class Manage_Everything {
 			System.out.println("delete success");
 			return 1;
 		}
->>>>>>> appointment
 	}
 	
 	public static void appoView() {
@@ -221,9 +204,7 @@ public class Manage_Everything {
 	}
 	
 	public static int appoUpdate() {
-<<<<<<< HEAD
-		return 0;
-=======
+
 		System.out.print("title >> ");
 		String title = search_appointment();
 		Appointment appoint = new Appointment();
@@ -278,7 +259,6 @@ public class Manage_Everything {
 				appointList.put(appoint.getTitle(), appoint);
 			}
 		}catch(IOException e) {
-			System.out.println("Failed to open");
 			return;
 		}
 	}
@@ -298,10 +278,8 @@ public class Manage_Everything {
 			}
 			fout.close();
 		}catch(Exception e) {
-			System.out.println("Failed to Store");
 			return;
 		}
->>>>>>> appointment
 	}
 	
 	private static String search_appointment() {
