@@ -211,7 +211,7 @@ public class Manage_Everything {
 			String title = it.next();
 			Appointment appoint = new Appointment();
 			appoint = appointList.get(title);
-			System.out.println("[제목: "+title+", 날짜: "+appoint.getDate()+", 이름: "+appoint.getPersons()+", 장소: "+appoint.getLocation()+"]");
+			System.out.println("[Title: "+title+", Date: "+appoint.getDate()+", Persons: "+appoint.getPersons()+", Location: "+appoint.getLocation()+"]");
 		}
 		System.out.print("Enter 0 >> ");
 		while((num = Integer.parseInt(scanner.nextLine()))!=0) {
