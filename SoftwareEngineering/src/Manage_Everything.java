@@ -329,7 +329,7 @@ public class Manage_Everything {
 				file_store_appointment();
 				break;
 			}
-			//file_store_appointment();	
+			file_store_appointment();	
 		}
 
 
