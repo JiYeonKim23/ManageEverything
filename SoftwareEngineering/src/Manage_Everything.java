@@ -25,17 +25,17 @@ public class Manage_Everything {
 	static HashMap<String, Contact> HashmapContact = new
 			Hashmap<String, Contact>();
 	//==============================contact=====================================
-	private static String contactSearch() {	
-		System.out.print("Enter name:");
+private static String searchContact() {
+		System.out.print("name>>");
 		String name = scanner.nextLine();
-		if (HashMapContact.get(name)==null) { //해당 이름이 없을 경우
-			System.out.println("No corresponding name exists.");
+		if (HashmapContact.get(name)==null) {
+			System.out.println("That name doesn't exist.");
 			return "0";
 		}
-		else {
+		else
 			return name;
-		}
 	}
+	
 	
 	public static int contactCreate() {
 		//성공 시 1 반환
@@ -56,22 +56,27 @@ public class Manage_Everything {
 		System.out.print("E-mail: ");
 		contact.setEmail(scanner.nextLine());
 		HashmapContact.put(name, Contact);
-		
+		System.out.println("create success");
 		return 1;
 	}
 	public static int contactDelete() {
 		//성공 시 1 반환
 		//실패 시 0 반환
+		System.out.print("name >> ");
 		String name = contactSearch();
-		if ( name=="0")//없다면
+		if ( name=="0") {
+			System.out.println("delete success");
 			return 0;
+		}
 		else {
-			HashMapContact.remove(title);
+			HashMapContact.remove(name);
+			System.out.println("That name doesn't exist.");
 			return 1;
 		}
 	}
 	public static void contactView() {
-		Set<String> keys = contactList.keySet();
+		int num;
+		Set<String> keys = HashmapContact.keySet();
 		Iterator<String> it = keys.iterator();
 		while (it.hasNext()) {
 			String name = it.next();
@@ -81,49 +86,86 @@ public class Manage_Everything {
 					" Phone number: " + contact.getNumber() +
 					" E-mail: " + contact.getEmail() + "]");
 		}
+		System.out.print("Enter 0 >> ");
+		while((num = Integer.parseInt(scanner.nextLine()))!=0) {
+			System.out.print("Enter 0 >> ");
+			continue;
+		}
 		
 	}
 	public static int contactUpdate() {
 		//성공 시 1 반환
 		//실패 시 0 반환
+		System.out.print("name >> ");
 		String name = contactSearch();
-		if (name == "0")
+		if (name == "0") {
+			System.out.println("That appointment doesn't exist");
 			return 0;
+		}
+		
 		// 수정하고 싶은 것을 입력받은 후 결정
 		Contact contact = HashMapContact.get(name);
 		System.out.println("1. Name, 2. Phone number, 3. E-mail");
-		System.out.print("Enter the number you want to modify>>");
-		int num = scanner.nextInt();		//==================================오류 발생 가능성
+		System.out.print("Enter what you want to update: ");
+		int num = scanner.nextInt();
 		if (num == 1) {
 			System.out.println("Name>");
-			String updated_name = scanner.next();		//==================================오류 발생 가능성
+			String updated_name = scanner.next();
 			todoContact.setName(updated_name);
 			HashMapContact.remove(name);
 			HashMapContact.put(updated_name, contact);
 		} else if (num == 2) {
 			System.out.println("Phone number>");
-			String number = scanner.next();		//==================================오류 발생 가능성
+			String number = scanner.next();		
 			contact.setNumber(number);
 			HashMapContact.remove(name);
 			HashMapContact.put(name,contact);
 		} else if (num == 3) {
 			System.out.println("E-mail>");
-			String email = scanner.next();		//==================================오류 발생 가능성
+			String email = scanner.next();		
 			contact.setEmail(email);
 			HashMapContact.remove(name);
 			HashMapContact.put(name,contact);
 		}
 		return 1;
-		return 0;
 	}
-	public static int contactDelete() {
-		return 0;
+	
+	private static void file_store_contact(String address) {
+		Set<String> keys = HashmapContact.keySet();
+		Iterator<String> it = keys.iterator();
+		try {
+			FileWriter fout = new FileWriter(address);
+			while(it.hasNext()) {
+				String name = scan.nextLine();
+				Contact contact = new Contact();
+				contact = HashmapContact.get(name);
+				String line = name + "," + list.getNumber() + "," + list.getEmail());
+				fout.write(line, 0, line.length());
+				fout.write("\r\n", 0, 2);
+			}
+		}catch(IOException e) {
+			return;
+		}
 	}
-	public static void contactView() {
-		
-	}
-	public static int contactUpdate() {
-		return 0;
+	
+	private static void file_open(String address) {
+		try {
+			Scanner scan = new Scanner(new FileReader(address));
+			while (scan.hasNextLine()) {
+				String line = scan.nextLine();
+				
+				StringTokenizer st = new StringTokenizer(line,",");
+				Contact contact = new Contact();
+				contact.setTitle(st.nextToken());
+				contact.setCreate_date(st.nextToken());
+				contact.setDue(st.nextToken());
+				HashMapContact.put(contact.getName(), contact);
+			}
+			scan.close();
+		}
+		catch(IOException e) {
+			System.out.println("입출력오류");
+		}
 	}
 	
 	
