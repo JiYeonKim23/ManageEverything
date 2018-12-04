@@ -35,11 +35,9 @@ class Appointment{
 
 public class Manage_Everything {
 	static Scanner scanner = new Scanner(System.in);
-	static HashMap<String, Contact> HashmapContact = new
-			HashMap<String, Contact>();
+	static HashMap<String, Contact> HashmapContact = new HashMap<String, Contact>();
 	static HashMap<String,Appointment> appointList = new HashMap<String, Appointment>();
 	static FileWriter fout = null;
-	FileReader fin = null;
 	static String appointment = "c:\\Temp\\appointment.txt";
 	//==============================contact=====================================
 private static String searchContact() {
