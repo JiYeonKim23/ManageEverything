@@ -36,7 +36,15 @@ class Appointment{
 public class Manage_Everything {
 	static Scanner scanner = new Scanner(System.in);
 	static HashMap<String, Contact> HashmapContact = new
+<<<<<<< HEAD
 			Hashmap<String, Contact>();
+=======
+			HashMap<String, Contact>();
+	static HashMap<String,Appointment> appointList = new HashMap<String, Appointment>();
+	static FileWriter fout = null;
+	FileReader fin = null;
+	static String appointment = "c:\\Temp\\appointment.txt";
+>>>>>>> appointment
 	//==============================contact=====================================
 private static String searchContact() {
 		System.out.print("name>>");
@@ -53,7 +61,7 @@ private static String searchContact() {
 	public static int contactCreate() {
 		//성공 시 1 반환
 		//실패 시 0 반환
-		Contact contact = new contact();
+		Contact contact = new Contact();
 		System.out.print("Name: ");
 		String name = scanner.nextLine();
 		if (HashmapContact.get(name)==null) {
@@ -68,7 +76,7 @@ private static String searchContact() {
 		contact.setNumber(scanner.nextLine());
 		System.out.print("E-mail: ");
 		contact.setEmail(scanner.nextLine());
-		HashmapContact.put(name, Contact);
+		HashmapContact.put(name, contact);
 		System.out.println("create success");
 		return 1;
 	}
@@ -76,13 +84,13 @@ private static String searchContact() {
 		//성공 시 1 반환
 		//실패 시 0 반환
 		System.out.print("name >> ");
-		String name = contactSearch();
+		String name = searchContact();
 		if ( name=="0") {
 			System.out.println("delete success");
 			return 0;
 		}
 		else {
-			HashMapContact.remove(name);
+			HashmapContact.remove(name);
 			System.out.println("That name doesn't exist.");
 			return 1;
 		}
@@ -110,35 +118,35 @@ private static String searchContact() {
 		//성공 시 1 반환
 		//실패 시 0 반환
 		System.out.print("name >> ");
-		String name = contactSearch();
+		String name = searchContact();
 		if (name == "0") {
 			System.out.println("That appointment doesn't exist");
 			return 0;
 		}
 		
 		// 수정하고 싶은 것을 입력받은 후 결정
-		Contact contact = HashMapContact.get(name);
+		Contact contact = HashmapContact.get(name);
 		System.out.println("1. Name, 2. Phone number, 3. E-mail");
 		System.out.print("Enter what you want to update: ");
 		int num = scanner.nextInt();
 		if (num == 1) {
 			System.out.println("Name>");
 			String updated_name = scanner.next();
-			todoContact.setName(updated_name);
-			HashMapContact.remove(name);
-			HashMapContact.put(updated_name, contact);
+			contact.setName(updated_name);
+			HashmapContact.remove(name);
+			HashmapContact.put(updated_name, contact);
 		} else if (num == 2) {
 			System.out.println("Phone number>");
 			String number = scanner.next();		
 			contact.setNumber(number);
-			HashMapContact.remove(name);
-			HashMapContact.put(name,contact);
+			HashmapContact.remove(name);
+			HashmapContact.put(name,contact);
 		} else if (num == 3) {
 			System.out.println("E-mail>");
 			String email = scanner.next();		
 			contact.setEmail(email);
-			HashMapContact.remove(name);
-			HashMapContact.put(name,contact);
+			HashmapContact.remove(name);
+			HashmapContact.put(name,contact);
 		}
 		return 1;
 	}
@@ -149,10 +157,10 @@ private static String searchContact() {
 		try {
 			FileWriter fout = new FileWriter(address);
 			while(it.hasNext()) {
-				String name = scan.nextLine();
+				String name = scanner.nextLine();
 				Contact contact = new Contact();
 				contact = HashmapContact.get(name);
-				String line = name + "," + list.getNumber() + "," + list.getEmail());
+				String line = name + "," + contact.getNumber() + "," + contact.getEmail();
 				fout.write(line, 0, line.length());
 				fout.write("\r\n", 0, 2);
 			}
@@ -169,10 +177,10 @@ private static String searchContact() {
 				
 				StringTokenizer st = new StringTokenizer(line,",");
 				Contact contact = new Contact();
-				contact.setTitle(st.nextToken());
-				contact.setCreate_date(st.nextToken());
-				contact.setDue(st.nextToken());
-				HashMapContact.put(contact.getName(), contact);
+				contact.setName(st.nextToken());
+				contact.setNumber(st.nextToken());
+				contact.setEmail(st.nextToken());
+				HashmapContact.put(contact.getName(), contact);
 			}
 			scan.close();
 		}
