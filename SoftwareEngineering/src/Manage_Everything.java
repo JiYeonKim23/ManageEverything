@@ -491,8 +491,6 @@ public class Manage_Everything {
 		String address = "c:\\Temp\\todoList.txt";
 		file_open(address);
 			while (true) {
-			System.out.println("======================================================================");
-			System.out.println("======================================================================");
 			System.out.print("1.Create 2.View 3.Update 4.Delete 5.Return to main\n메뉴입력>>");
 			int num = scanner.nextInt();
 			if (num >= 1 && num <= 5)
