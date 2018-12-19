@@ -14,6 +14,12 @@ class TeamTest {
 		app.setPersons("Jane");
 		app.setLocation("Bluesquare hall");
 		m.appointList.put(app.getTitle(), app);
+		
+		Contact contact = new Contact();
+		contact.setName("Julia");
+		contact.setNumber("01012345678");
+		contact.setEmail("julia_gmail.com");
+		m.HashmapContact.put(contact.getName(), contact);
     }
 	@Test
 	void search_diff() {
@@ -35,5 +41,16 @@ class TeamTest {
 		Manage_Everything m = new Manage_Everything();
 		assertTrue(m.checkExisting("title2"));
 	}
-
+	
+	@Test
+	void possibleToDelete() {
+		Manage_Everything m = new Manage_Everything();
+		assertEquals(1, m.deleteOrNot(true, "Julia"));
+	}
+	
+	@Test
+	void testContactExistence() {
+		Manage_Everything m = new Manage_Everything();
+		assertTrue(m.checkContactExistence("Julia"));
+	}
 }
