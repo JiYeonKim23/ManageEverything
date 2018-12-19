@@ -250,10 +250,11 @@ public class Manage_Everything {
 			System.out.println("[title:"+name+", create date:"+todoItem.getCreate_date()+", due date:"+todoItem.getDue()+",description:"+todoItem.getDescription()+"]");
 			
 		}
-		System.out.print("Enter 0>>");
-		int num=scanner.nextInt();
-		if (num==0)
-			return ;
+		int num;
+		do{
+			System.out.print("Enter 0>>");
+			num=scanner.nextInt();
+		} while (num!=0);
 	}
 
 	public static int todoUpdate() { // 성공 시 1 반환, 실패 시 0 반환
