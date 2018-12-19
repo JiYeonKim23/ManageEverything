@@ -43,7 +43,6 @@ class Appointment{
 	public void setPersons(String persons) {this.persons = persons;}
 	public String getLocation() {return location;}
 	public void setLocation(String location) {this.location = location;}
-
 }
 
 public class Manage_Everything {
@@ -51,7 +50,10 @@ public class Manage_Everything {
 	static HashMap<String, Contact> HashmapContact = new HashMap<String, Contact>();
 	static HashMap<String,Appointment> appointList = new HashMap<String, Appointment>();
 	static HashMap<String,TodoList> HashMapTodoList = new HashMap<String,TodoList>();
+<<<<<<< HEAD
 	static FileWriter fout = null;	//??
+=======
+>>>>>>> appointment
 	static String appointment = "c:\\Temp\\appointment.txt";
 	//==============================contact=====================================
 	private static String searchContact() {
@@ -255,6 +257,7 @@ public class Manage_Everything {
 			System.out.print("Enter 0>>");
 			num=scanner.nextInt();
 		} while (num!=0);
+<<<<<<< HEAD
 	}
 
 	public static int todoUpdate() { // 성공 시 1 반환, 실패 시 0 반환
@@ -295,6 +298,48 @@ public class Manage_Everything {
 		}
 		return 1;
 	}
+=======
+	}
+
+	public static int todoUpdate() { // 성공 시 1 반환, 실패 시 0 반환
+		String title = todoSearch();
+		if (title == "0")// 없다면
+			return 0;
+		// 수정하고 싶은 것을 입력받은 후 결정
+		TodoList todoItem = HashMapTodoList.get(title);
+		System.out.println("1. Title, 2. Create date, 3. Due 4. Description");
+		System.out.print("Enter what you want to update: ");
+		int num=Integer.parseInt(scanner.nextLine());	//왜 이렇게 바꿔야 하는 지 모르겠음
+		//int num = scanner.nextInt();		//오류 발생
+		if (num == 1) {
+			System.out.println("Title: ");
+			String updated_title = scanner.nextLine();	
+			todoItem.setTitle(updated_title);
+			HashMapTodoList.remove(title);
+			HashMapTodoList.put(updated_title, todoItem);
+		} else if (num == 2) {
+			System.out.println("Create Date: ");
+			String createDate = scanner.nextLine();
+			todoItem.setCreate_date(createDate);
+			HashMapTodoList.remove(title);
+			HashMapTodoList.put(title,todoItem);
+		} else if (num == 3) {
+			System.out.println("Due date: ");
+			String updated_due = scanner.nextLine();
+			todoItem.setDue(updated_due);
+			HashMapTodoList.remove(title);
+			HashMapTodoList.put(title,todoItem);
+			
+		} else if (num == 4) {
+			System.out.println("Description: ");
+			String updated_description = scanner.nextLine();
+			todoItem.setDescription(updated_description);
+			HashMapTodoList.remove(title);
+			HashMapTodoList.put(title,todoItem);
+		}
+		return 1;
+	}
+>>>>>>> appointment
 	
 	private static void file_store_todolist(String address) {
 		Set<String> keys = HashMapTodoList.keySet();
@@ -340,11 +385,10 @@ public class Manage_Everything {
 	}
 	//==============================Appointment=====================================
 	public static int appoCreate() {
-
 		Appointment app = new Appointment();
 		System.out.print("title >> ");
 		String title = scanner.nextLine();
-		if(appointList.get(title)==null)
+		if(checkExisting(title))
 			app.setTitle(title);
 		else {
 			System.out.println("That title already exists.");
@@ -361,10 +405,17 @@ public class Manage_Everything {
 		return 1;
 	}
 	
+	public static Boolean checkExisting(String title) {
+		if(appointList.get(title)==null)
+			return true;
+		else
+			return false;
+	}
+	
 	public static int appoDelete() {
-
 		System.out.print("title >> ");
-		String title = search_appointment();
+		String title_input = scanner.nextLine();
+		String title = search_appointment(title_input);
 		if(title == "0") {
 			System.out.println("That appointment doesn't exist");
 			return 0;
@@ -394,9 +445,9 @@ public class Manage_Everything {
 	}
 	
 	public static int appoUpdate() {
-
 		System.out.print("title >> ");
-		String title = search_appointment();
+		String title_input = scanner.nextLine();
+		String title = search_appointment(title_input);
 		Appointment appoint = new Appointment();
 		if(title == "0") {	
 			System.out.println("That appointment doesn't exist");
@@ -457,7 +508,7 @@ public class Manage_Everything {
 		Set<String> keys = appointList.keySet();
 		Iterator <String> it = keys.iterator();
 		try {
-			fout = new FileWriter(appointment);
+			FileWriter fout = new FileWriter(appointment);
 			while(it.hasNext()) {
 				String title = it.next();
 				Appointment appoint = new Appointment();
@@ -472,8 +523,7 @@ public class Manage_Everything {
 		}
 	}
 	
-	private static String search_appointment() {
-		String title = scanner.nextLine();
+	public static String search_appointment(String title) {
 		if(appointList.get(title)==null) {
 			return "0";
 		}
@@ -483,7 +533,6 @@ public class Manage_Everything {
 			return title;
 		}
 	}
-
 	//==============================main=====================================
 	public static void main_contact() {
 		
