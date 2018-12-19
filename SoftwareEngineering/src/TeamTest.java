@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.*;
 
-class MyTest {
+class TeamTest {
     @BeforeAll
     static void createData() {
     	Manage_Everything m = new Manage_Everything();
