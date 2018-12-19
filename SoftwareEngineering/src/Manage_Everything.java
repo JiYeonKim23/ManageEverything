@@ -50,13 +50,14 @@ public class Manage_Everything {
 	static HashMap<String, Contact> HashmapContact = new HashMap<String, Contact>();
 	static HashMap<String,Appointment> appointList = new HashMap<String, Appointment>();
 	static HashMap<String,TodoList> HashMapTodoList = new HashMap<String,TodoList>();
-    static String appointment = "c:\\Temp\\appointment.txt";
+    static String contact = "c:\\Temp\\contact.txt";
+	static String appointment = "c:\\Temp\\appointment.txt";
 	//==============================contact=====================================
 	private static String searchContact() {
-		System.out.print("name>>");
+		System.out.print("name: ");
 		String name = scanner.nextLine();
 		if (HashmapContact.get(name)==null) {
-			System.out.println("That name doesn't exist.");
+			System.out.println("That name doesn't exist");
 			return "0";
 		}
 		else
@@ -64,22 +65,20 @@ public class Manage_Everything {
 	}
 	
 	public static int contactCreate() {
-		//º∫∞¯ Ω√ 1 π›»Ø
-		//Ω«∆– Ω√ 0 π›»Ø
 		Contact contact = new Contact();
-		System.out.print("Name: ");
+		System.out.print("Name>> ");
 		String name = scanner.nextLine();
 		if (HashmapContact.get(name)==null) {
 			contact.setName(name);
 		}
 		else {
-			System.out.println("This is a duplicate name. Please re-enter.");
+			System.out.println("That name already exist.");
 			return 0;
 		}
 		
-		System.out.print("Phone number: ");
+		System.out.print("Phone number>> ");
 		contact.setNumber(scanner.nextLine());
-		System.out.print("E-mail: ");
+		System.out.print("E-mail>> ");
 		contact.setEmail(scanner.nextLine());
 		HashmapContact.put(name, contact);
 		System.out.println("create success");
@@ -87,17 +86,15 @@ public class Manage_Everything {
 	}
 	
 	public static int contactDelete() {
-		//º∫∞¯ Ω√ 1 π›»Ø
-		//Ω«∆– Ω√ 0 π›»Ø
-		System.out.print("name >> ");
+		System.out.println("Enter the name which you want to delete");
 		String name = searchContact();
 		if ( name=="0") {
-			System.out.println("delete success");
+			System.out.println("That contact doesn't exist");
 			return 0;
 		}
 		else {
 			HashmapContact.remove(name);
-			System.out.println("That name doesn't exist.");
+			System.out.println("delete success");
 			return 1;
 		}
 	}
@@ -122,66 +119,42 @@ public class Manage_Everything {
 	}
 	
 	public static int contactUpdate() {
-		//º∫∞¯ Ω√ 1 π›»Ø
-		//Ω«∆– Ω√ 0 π›»Ø
-		System.out.print("name >> ");
+		System.out.println("Enter the name which you want to update");
 		String name = searchContact();
+		Contact contact = new Contact();
 		if (name == "0") {
-			System.out.println("That appointment doesn't exist");
+			System.out.println("That contact doesn't exist");
 			return 0;
 		}
 		
-		// ºˆ¡§«œ∞Ì ΩÕ¿∫ ∞Õ¿ª ¿‘∑¬πﬁ¿∫ »ƒ ∞·¡§
-		Contact contact = HashmapContact.get(name);
-		System.out.println("1. Name, 2. Phone number, 3. E-mail");
+		System.out.print("1. Name, 2. Phone number, 3. E-mail >>");
+		int num = Integer.parseInt(scanner.nextLine());
 		System.out.print("Enter what you want to update: ");
-		int num = scanner.nextInt();
 		if (num == 1) {
-			System.out.println("Name>");
-			String updated_name = scanner.next();
-			contact.setName(updated_name);
+			String new_name = scanner.nextLine();
+			contact = HashmapContact.get(name);
+			contact.setName(new_name);
+			HashmapContact.put(new_name, contact);
 			HashmapContact.remove(name);
-			HashmapContact.put(updated_name, contact);
 		} else if (num == 2) {
-			System.out.println("Phone number>");
-			String number = scanner.next();		
-			contact.setNumber(number);
-			HashmapContact.remove(name);
-			HashmapContact.put(name,contact);
+			String new_number = scanner.nextLine();		
+			contact = HashmapContact.get(name);
+			contact.setNumber(new_number);
 		} else if (num == 3) {
-			System.out.println("E-mail>");
-			String email = scanner.next();		
-			contact.setEmail(email);
-			HashmapContact.remove(name);
-			HashmapContact.put(name,contact);
+			String new_email = scanner.nextLine();
+			contact = HashmapContact.get(name);
+			contact.setEmail(new_email);
 		}
+		
+		System.out.println("update success");
 		return 1;
 	}
 	
-	private static void file_store_contact(String address) {
-		Set<String> keys = HashmapContact.keySet();
-		Iterator<String> it = keys.iterator();
+	private static void file_open_contact() {
 		try {
-			FileWriter fout = new FileWriter(address);
-			while(it.hasNext()) {
-				String name = scanner.nextLine();
-				Contact contact = new Contact();
-				contact = HashmapContact.get(name);
-				String line = name + "," + contact.getNumber() + "," + contact.getEmail();
-				fout.write(line, 0, line.length());
-				fout.write("\r\n", 0, 2);
-			}
-		}catch(IOException e) {
-			return;
-		}
-	}
-	
-	private static void file_open(String address) {
-		try {
-			Scanner scan = new Scanner(new FileReader(address));
+			Scanner scan = new Scanner(new FileReader(contact));
 			while (scan.hasNextLine()) {
 				String line = scan.nextLine();
-				
 				StringTokenizer st = new StringTokenizer(line,",");
 				Contact contact = new Contact();
 				contact.setName(st.nextToken());
@@ -192,15 +165,34 @@ public class Manage_Everything {
 			scan.close();
 		}
 		catch(IOException e) {
-			System.out.println("¿‘√‚∑¬ø¿∑˘");
+			System.out.println("ÌååÏùº Ïò§Ìîà Ïò§Î•ò");
+		}
+	}
+	
+	private static void file_store_contact() {
+		Set<String> keys = HashmapContact.keySet();
+		Iterator<String> it = keys.iterator();
+		try {
+			FileWriter fout = new FileWriter(contact);
+			while(it.hasNext()) {
+				String name = it.next();
+				Contact contact = new Contact();
+				contact = HashmapContact.get(name);
+				String line = name + "," + contact.getNumber() + "," + contact.getEmail();
+				fout.write(line, 0, line.length());
+				fout.write("\r\n", 0, 2);
+			}
+			fout.close();
+		}catch(IOException e) {
+			return;
 		}
 	}
 	
 	//==============================todoList=====================================
-	private static String todoSearch() {	//∞Àªˆ >>delete,update
+	private static String todoSearch() {	//Í≤ÄÏÉâ >>delete,update
 		System.out.print("Title: ");
 		String name = scanner.nextLine();
-		if (HashMapTodoList.get(name)==null) { //«ÿ¥Á ¿Ã∏ß¿Ã æ¯¿ª ∞ÊøÏ
+		if (HashMapTodoList.get(name)==null) { //Ìï¥Îãπ Ïù¥Î¶ÑÏù¥ ÏóÜÏùÑ Í≤ΩÏö∞
 			System.out.println("That to-do list doesn't exist");
 			return "0";
 		}
@@ -209,11 +201,11 @@ public class Manage_Everything {
 		}
 	}
 	
-	public static int todoCreate() {	 //º∫∞¯ Ω√ 1 π›»Ø , Ω«∆– Ω√ 0 π›»Ø
+	public static int todoCreate() {	 //ÏÑ±Í≥µ Ïãú 1 Î∞òÌôò , Ïã§Ìå® Ïãú 0 Î∞òÌôò
 		TodoList todoItem = new TodoList();
 		System.out.print("Title: ");
 		String name = scanner.nextLine();
-		if (HashMapTodoList.get(name)==null)	// ¡ﬂ∫πµ«¡ˆ æ ¥¬¥Ÿ∏È
+		if (HashMapTodoList.get(name)==null)	// Ï§ëÎ≥µÎêòÏßÄ ÏïäÎäîÎã§Î©¥
 			todoItem.setTitle(name);
 		else {
 			System.out.println("That title already exists.");
@@ -229,9 +221,9 @@ public class Manage_Everything {
 		return 1;
 	}
 	
-	public static int todoDelete() {	//º∫∞¯ Ω√ 1 π›»Ø, Ω«∆– Ω√ 0 π›»Ø
+	public static int todoDelete() {	//ÏÑ±Í≥µ Ïãú 1 Î∞òÌôò, Ïã§Ìå® Ïãú 0 Î∞òÌôò
 		String title = todoSearch();
-		if ( title=="0")//æ¯¥Ÿ∏È
+		if ( title=="0")//ÏóÜÎã§Î©¥
 			return 0;
 		else {
 			HashMapTodoList.remove(title);
@@ -255,16 +247,16 @@ public class Manage_Everything {
 		} while (num!=0);
 	}
 
-	public static int todoUpdate() { // º∫∞¯ Ω√ 1 π›»Ø, Ω«∆– Ω√ 0 π›»Ø
+	public static int todoUpdate() { // ÏÑ±Í≥µ Ïãú 1 Î∞òÌôò, Ïã§Ìå® Ïãú 0 Î∞òÌôò
 		String title = todoSearch();
-		if (title == "0")// æ¯¥Ÿ∏È
+		if (title == "0")// ÏóÜÎã§Î©¥
 			return 0;
-		// ºˆ¡§«œ∞Ì ΩÕ¿∫ ∞Õ¿ª ¿‘∑¬πﬁ¿∫ »ƒ ∞·¡§
+		// ÏàòÏ†ïÌïòÍ≥† Ïã∂ÏùÄ Í≤ÉÏùÑ ÏûÖÎ†•Î∞õÏùÄ ÌõÑ Í≤∞Ï†ï
 		TodoList todoItem = HashMapTodoList.get(title);
 		System.out.println("1. Title, 2. Create date, 3. Due 4. Description");
 		System.out.print("Enter what you want to update: ");
-		int num=Integer.parseInt(scanner.nextLine());	//ø÷ ¿Ã∑∏∞‘ πŸ≤„æﬂ «œ¥¬ ¡ˆ ∏∏£∞⁄¿Ω
-		//int num = scanner.nextInt();		//ø¿∑˘ πﬂª˝
+		int num=Integer.parseInt(scanner.nextLine());	//Ïôú Ïù¥Î†áÍ≤å Î∞îÍøîÏïº ÌïòÎäî ÏßÄ Î™®Î•¥Í≤†Ïùå
+		//int num = scanner.nextInt();		//Ïò§Î•ò Î∞úÏÉù
 		if (num == 1) {
 			System.out.println("Title: ");
 			String updated_title = scanner.nextLine();	
@@ -308,7 +300,7 @@ public class Manage_Everything {
 				fout.write("\r\n", 0, 2);
 			}
 			fout.close();
-			// System.out.println(address+"ø° ¿˙¿Âµ«æ˙Ω¿¥œ¥Ÿ.");
+			// System.out.println(address+"Ïóê Ï†ÄÏû•ÎêòÏóàÏäµÎãàÎã§.");
 		} catch (Exception e) {
 			return;
 		}
@@ -330,10 +322,10 @@ public class Manage_Everything {
 				HashMapTodoList.put(item.getTitle(), item);
 			}
 			scan.close();
-			//System.out.println(address+"∑Œ∫Œ≈Õ ¡§∫∏∏¶ ∫“∑Øø‘Ω¿¥œ¥Ÿ.");
+			//System.out.println(address+"Î°úÎ∂ÄÌÑ∞ Ï†ïÎ≥¥Î•º Î∂àÎü¨ÏôîÏäµÎãàÎã§.");
 		}
 		catch(IOException e) {
-			//System.out.println("¿‘√‚∑¬ø¿∑˘");
+			//System.out.println("ÏûÖÏ∂úÎ†•Ïò§Î•ò");
 		}
 	}
 	//==============================Appointment=====================================
@@ -488,33 +480,51 @@ public class Manage_Everything {
 	}
 	//==============================main=====================================
 	public static void main_contact() {
-		
+		while (true) {
+			System.out.print("1.Create, 2.View, 3.Update, 4.Delete, 5.Return to main >>");
+			int num = Integer.parseInt(scanner.nextLine());
+			file_open_contact();
+			
+			if (num == 1) { // ÏÉùÏÑ±
+				contactCreate();
+			} else if (num == 2) { // Î≥¥Í∏∞
+				contactView();
+			} else if (num == 3) { // ÏàòÏ†ï
+				contactUpdate();
+			} else if (num == 4) { // ÏÇ≠Ï†ú
+				contactDelete();
+			} else if (num == 5) { // Ï¢ÖÎ£å
+				file_store_contact();
+				break;
+			}
+			file_store_contact();
+		}
 	}
 	public static void main_todolist() {
 		String address = "c:\\Temp\\todoList.txt";
-		file_open(address);
+		file_open_todolist(address);
 			while (true) {
 			System.out.print("1.Create, 2.View, 3.Update, 4.Delete, 5.Return to main >>");
 			int num = scanner.nextInt();
 			if (num >= 1 && num <= 5)
 				scanner.nextLine();
-			if (num == 1) { // ª˝º∫
+			if (num == 1) { // ÏÉùÏÑ±
 				if ( todoCreate()==1 )
 					System.out.println("create success");
-			} else if (num == 2) { // ∫∏±‚
+			} else if (num == 2) { // Î≥¥Í∏∞
 				todoView();
-			} else if (num == 3) { // ºˆ¡§
+			} else if (num == 3) { // ÏàòÏ†ï
 				if ( todoUpdate()==1 )
 					System.out.println("update success");
-			} else if (num == 4) { // ªË¡¶
+			} else if (num == 4) { // ÏÇ≠Ï†ú
 				if ( todoDelete()==1 )
 				System.out.println("delete success");
-			} else if (num == 5) { // ¡æ∑·
+			} else if (num == 5) { // Ï¢ÖÎ£å
 				file_store_todolist(address);
 				break;
 			}
-			file_store_todolist(address);	//file_open()¿Ã whileπÆ æ»ø° ¿÷¿∏∏È, ¿Ã ƒ⁄µÂ∞° ≤¿ ¿÷æÓæﬂ «‘
-			//¡ˆ±›¿∫ file_open()¿Ã whileπÆ π€ø° ¿÷¿∏π«∑Œ ≤¿ « ø‰«— πÆ¿Â¿∫ æ∆¥œ¡ˆ∏∏, ∫Ò¡§ªÛ ¡æ∑·∏¶ ∏∑±‚ ¿ß«ÿ ¡∏¿Á
+			file_store_todolist(address);	//file_open()Ïù¥ whileÎ¨∏ ÏïàÏóê ÏûàÏúºÎ©¥, Ïù¥ ÏΩîÎìúÍ∞Ä Íº≠ ÏûàÏñ¥Ïïº Ìï®
+			//ÏßÄÍ∏àÏùÄ file_open()Ïù¥ whileÎ¨∏ Î∞ñÏóê ÏûàÏúºÎØÄÎ°ú Íº≠ ÌïÑÏöîÌïú Î¨∏Ïû•ÏùÄ ÏïÑÎãàÏßÄÎßå, ÎπÑÏ†ïÏÉÅ Ï¢ÖÎ£åÎ•º ÎßâÍ∏∞ ÏúÑÌï¥ Ï°¥Ïû¨
 		}
 	}
 	public static void main_appointment() {
