@@ -491,7 +491,7 @@ public class Manage_Everything {
 		String address = "c:\\Temp\\todoList.txt";
 		file_open(address);
 			while (true) {
-			System.out.print("1.Create 2.View 3.Update 4.Delete 5.Return to main\n메뉴입력>>");
+			System.out.print("1.Create 2.View 3.Update 4.Delete 5.Return to main >>");
 			int num = scanner.nextInt();
 			if (num >= 1 && num <= 5)
 				scanner.nextLine();
@@ -516,7 +516,7 @@ public class Manage_Everything {
 	}
 	public static void main_appointment() {
 		while(true) {
-			System.out.print("1. Create, 2. View, 3. Update, 4. Delete, 5. Return to main >>");
+			System.out.print("1.Create, 2.View, 3.Update, 4.Delete, 5.Return to main >>");
 			int num = Integer.parseInt(scanner.nextLine());
 			file_open_appointment();
 			if(num == 1){
