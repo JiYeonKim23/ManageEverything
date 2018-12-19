@@ -50,18 +50,20 @@ public class Manage_Everything {
 	static HashMap<String, Contact> HashmapContact = new HashMap<String, Contact>();
 	static HashMap<String,Appointment> appointList = new HashMap<String, Appointment>();
 	static HashMap<String,TodoList> HashMapTodoList = new HashMap<String,TodoList>();
-    	static String contact = "c:\\Temp\\contact.txt";
+    static String contact = "c:\\Temp\\contact.txt";
 	static String appointment = "c:\\Temp\\appointment.txt";
 	//==============================contact=====================================
-	private static String searchContact() {
-		System.out.print("name: ");
+	private static Boolean searchContact() {
 		String name = scanner.nextLine();
-		if (HashmapContact.get(name)==null) {
-			System.out.println("That name doesn't exist");
-			return "0";
-		}
+		
+		return checkContactExistence(name);
+	}
+	
+	public static boolean checkContactExistence(String name) {
+		if (HashmapContact.get(name)==null) 
+			return false;
 		else
-			return name;
+			return true;
 	}
 	
 	public static int contactCreate() {
@@ -86,9 +88,19 @@ public class Manage_Everything {
 	}
 	
 	public static int contactDelete() {
-		System.out.println("Enter the name of contact which you want to delete");
-		String name = searchContact();
-		if ( name=="0") {
+		System.out.print("Enter the name of contact which you want to delete>>");
+		boolean existence;
+		String name = scanner.next();
+		if (HashmapContact.get(name)==null) 
+			existence = false;
+		else
+			existence = true;
+		int returnValue = deleteOrNot(existence, name);
+		return returnValue;
+	}
+	
+	public static int deleteOrNot(boolean existence, String name) {
+		if( existence == false ) {
 			System.out.println("That contact doesn't exist");
 			return 0;
 		}
@@ -111,37 +123,41 @@ public class Manage_Everything {
 					" Phone number: " + contact.getNumber() +
 					" E-mail: " + contact.getEmail() + "]");
 		}
+		
 		System.out.print("Enter 0 >> ");
-		while((num = Integer.parseInt(scanner.nextLine()))!=0) {
+		
+		while((num = scanner.nextInt())!=0) {
 			System.out.print("Enter 0 >> ");
 			continue;
 		}
 	}
 	
 	public static int contactUpdate() {
-		System.out.println("Enter the name of contact which you want to update");
-		String name = searchContact();
-		Contact contact = new Contact();
-		if (name == "0") {
+		System.out.print("Enter the name of contact which you want to update>>");
+		String name = scanner.next();
+		
+		if (HashmapContact.get(name)==null) {
 			System.out.println("That contact doesn't exist");
 			return 0;
 		}
 		
+		Contact contact = new Contact();
 		System.out.print("1. Name, 2. Phone number, 3. E-mail >>");
-		int num = Integer.parseInt(scanner.nextLine());
+		int num = scanner.nextInt();
 		System.out.print("Enter what you want to update: ");
+		
 		if (num == 1) {
-			String new_name = scanner.nextLine();
+			String new_name = scanner.next();
 			contact = HashmapContact.get(name);
 			contact.setName(new_name);
 			HashmapContact.put(new_name, contact);
 			HashmapContact.remove(name);
 		} else if (num == 2) {
-			String new_number = scanner.nextLine();		
+			String new_number = scanner.next();		
 			contact = HashmapContact.get(name);
 			contact.setNumber(new_number);
 		} else if (num == 3) {
-			String new_email = scanner.nextLine();
+			String new_email = scanner.next();
 			contact = HashmapContact.get(name);
 			contact.setEmail(new_email);
 		}
@@ -482,7 +498,7 @@ public class Manage_Everything {
 	public static void main_contact() {
 		while (true) {
 			System.out.print("1.Create, 2.View, 3.Update, 4.Delete, 5.Return to main >>");
-			int num = Integer.parseInt(scanner.nextLine());
+			int num = scanner.nextInt();
 			file_open_contact();
 			
 			if (num == 1) { // 생성
