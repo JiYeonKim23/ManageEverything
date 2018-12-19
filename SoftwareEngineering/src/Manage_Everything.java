@@ -13,7 +13,20 @@ class Contact {
 	public void setEmail(String email) {this.email = email;}
 }
 
-class todoList{
+class TodoList{
+	private String title;
+	private String create_date;
+	private String due;
+	private String description;
+	
+	public String getTitle() {return title;	}
+	public void setTitle(String title) {this.title = title;}
+	public String getCreate_date() {return create_date; }
+	public void setCreate_date(String create_date) {this.create_date = create_date;	}
+	public String getDue() {return due;}
+	public void setDue(String due) {this.due = due;}
+	public String getDescription() {return description;}
+	public void setDescription(String description) {this.description = description;	}
 }
 
 class Appointment{
@@ -30,17 +43,16 @@ class Appointment{
 	public void setPersons(String persons) {this.persons = persons;}
 	public String getLocation() {return location;}
 	public void setLocation(String location) {this.location = location;}
-
 }
 
 public class Manage_Everything {
 	static Scanner scanner = new Scanner(System.in);
 	static HashMap<String, Contact> HashmapContact = new HashMap<String, Contact>();
 	static HashMap<String,Appointment> appointList = new HashMap<String, Appointment>();
-	static FileWriter fout = null;
+	static HashMap<String,TodoList> HashMapTodoList = new HashMap<String,TodoList>();
 	static String appointment = "c:\\Temp\\appointment.txt";
 	//==============================contact=====================================
-private static String searchContact() {
+	private static String searchContact() {
 		System.out.print("name>>");
 		String name = scanner.nextLine();
 		if (HashmapContact.get(name)==null) {
@@ -50,7 +62,6 @@ private static String searchContact() {
 		else
 			return name;
 	}
-	
 	
 	public static int contactCreate() {
 		//성공 시 1 반환
@@ -74,6 +85,7 @@ private static String searchContact() {
 		System.out.println("create success");
 		return 1;
 	}
+	
 	public static int contactDelete() {
 		//성공 시 1 반환
 		//실패 시 0 반환
@@ -89,6 +101,7 @@ private static String searchContact() {
 			return 1;
 		}
 	}
+	
 	public static void contactView() {
 		int num;
 		Set<String> keys = HashmapContact.keySet();
@@ -106,8 +119,8 @@ private static String searchContact() {
 			System.out.print("Enter 0 >> ");
 			continue;
 		}
-		
 	}
+	
 	public static int contactUpdate() {
 		//성공 시 1 반환
 		//실패 시 0 반환
@@ -184,25 +197,151 @@ private static String searchContact() {
 	}
 	
 	//==============================todoList=====================================
-	public static int todoCreate() {
-		return 0;
+	private static String todoSearch() {	//검색 >>delete,update
+		System.out.print("Title: ");
+		String name = scanner.nextLine();
+		if (HashMapTodoList.get(name)==null) { //해당 이름이 없을 경우
+			System.out.println("That to-do list doesn't exist");
+			return "0";
+		}
+		else {
+			return name;
+		}
 	}
-	public static int todoDelete() {
-		return 0;
+	
+	public static int todoCreate() {	 //성공 시 1 반환 , 실패 시 0 반환
+		TodoList todoItem = new TodoList();
+		System.out.print("Title: ");
+		String name = scanner.nextLine();
+		if (HashMapTodoList.get(name)==null)	// 중복되지 않는다면
+			todoItem.setTitle(name);
+		else {
+			System.out.println("That title already exists.");
+			return 0;
+		}
+		System.out.print("Create date: ");
+		todoItem.setCreate_date(scanner.nextLine());
+		System.out.print("Due date: ");
+		todoItem.setDue(scanner.nextLine());
+		System.out.print("Description: ");
+		todoItem.setDescription(scanner.nextLine());
+		HashMapTodoList.put(todoItem.getTitle(), todoItem);
+		return 1;
+	}
+	
+	public static int todoDelete() {	//성공 시 1 반환, 실패 시 0 반환
+		String title = todoSearch();
+		if ( title=="0")//없다면
+			return 0;
+		else {
+			HashMapTodoList.remove(title);
+			return 1;
+		}
 	}
 	public static void todoView() {
-		
+		Set<String> keys = HashMapTodoList.keySet();
+		Iterator<String> it = keys.iterator();
+		while(it.hasNext()) {
+			String name = it.next();
+			TodoList todoItem = new TodoList();
+			todoItem = HashMapTodoList.get(name);
+			System.out.println("[title:"+name+", create date:"+todoItem.getCreate_date()+", due date:"+todoItem.getDue()+",description:"+todoItem.getDescription()+"]");
+			
+		}
+		int num;
+		do{
+			System.out.print("Enter 0>>");
+			num=scanner.nextInt();
+		} while (num!=0);
 	}
-	public static int todoUpdate() {
-		return 0;
+
+	public static int todoUpdate() { // 성공 시 1 반환, 실패 시 0 반환
+		String title = todoSearch();
+		if (title == "0")// 없다면
+			return 0;
+		// 수정하고 싶은 것을 입력받은 후 결정
+		TodoList todoItem = HashMapTodoList.get(title);
+		System.out.println("1. Title, 2. Create date, 3. Due 4. Description");
+		System.out.print("Enter what you want to update: ");
+		int num=Integer.parseInt(scanner.nextLine());	//왜 이렇게 바꿔야 하는 지 모르겠음
+		//int num = scanner.nextInt();		//오류 발생
+		if (num == 1) {
+			System.out.println("Title: ");
+			String updated_title = scanner.nextLine();	
+			todoItem.setTitle(updated_title);
+			HashMapTodoList.remove(title);
+			HashMapTodoList.put(updated_title, todoItem);
+		} else if (num == 2) {
+			System.out.println("Create Date: ");
+			String createDate = scanner.nextLine();
+			todoItem.setCreate_date(createDate);
+			HashMapTodoList.remove(title);
+			HashMapTodoList.put(title,todoItem);
+		} else if (num == 3) {
+			System.out.println("Due date: ");
+			String updated_due = scanner.nextLine();
+			todoItem.setDue(updated_due);
+			HashMapTodoList.remove(title);
+			HashMapTodoList.put(title,todoItem);
+			
+		} else if (num == 4) {
+			System.out.println("Description: ");
+			String updated_description = scanner.nextLine();
+			todoItem.setDescription(updated_description);
+			HashMapTodoList.remove(title);
+			HashMapTodoList.put(title,todoItem);
+		}
+		return 1;
+	}
+	
+	private static void file_store_todolist(String address) {
+		Set<String> keys = HashMapTodoList.keySet();
+		Iterator<String> it = keys.iterator();
+		try {
+			FileWriter fout = new FileWriter(address);
+			while (it.hasNext()) {
+				String name = it.next();
+				TodoList list = new TodoList();
+				list = HashMapTodoList.get(name);
+				String line = name + "," + list.getCreate_date() + "," + list.getDue() + "," + list.getDescription();
+				fout.write(line, 0, line.length());
+				fout.write("\r\n", 0, 2);
+			}
+			fout.close();
+			// System.out.println(address+"에 저장되었습니다.");
+		} catch (Exception e) {
+			return;
+		}
+	}
+	
+	private static void file_open_todolist(String address) {
+		try {
+			Scanner scan = new Scanner(new FileReader(address));
+			while (scan.hasNextLine()) {
+				String line = scan.nextLine();
+				
+				StringTokenizer st = new StringTokenizer(line,",");
+				TodoList item = new TodoList();
+				item.setTitle(st.nextToken());
+				item.setCreate_date(st.nextToken());
+				item.setDue(st.nextToken());
+				item.setDescription(st.nextToken());
+				//item.setDescription(Integer.parseInt(st.nextToken()));
+				HashMapTodoList.put(item.getTitle(), item);
+			}
+			scan.close();
+			//System.out.println(address+"로부터 정보를 불러왔습니다.");
+		}
+		catch(IOException e) {
+			//System.out.println("입출력오류");
+		}
 	}
 	//==============================Appointment=====================================
 	public static int appoCreate() {
-
 		Appointment app = new Appointment();
 		System.out.print("title >> ");
 		String title = scanner.nextLine();
-		if(appointList.get(title)==null)
+		if(checkExisting(title))
 			app.setTitle(title);
 		else {
 			System.out.println("That title already exists.");
@@ -219,10 +358,17 @@ private static String searchContact() {
 		return 1;
 	}
 	
+	public static Boolean checkExisting(String title) {
+		if(appointList.get(title)==null)
+			return true;
+		else
+			return false;
+	}
+	
 	public static int appoDelete() {
-
 		System.out.print("title >> ");
-		String title = search_appointment();
+		String title_input = scanner.nextLine();
+		String title = search_appointment(title_input);
 		if(title == "0") {
 			System.out.println("That appointment doesn't exist");
 			return 0;
@@ -252,9 +398,9 @@ private static String searchContact() {
 	}
 	
 	public static int appoUpdate() {
-
 		System.out.print("title >> ");
-		String title = search_appointment();
+		String title_input = scanner.nextLine();
+		String title = search_appointment(title_input);
 		Appointment appoint = new Appointment();
 		if(title == "0") {	
 			System.out.println("That appointment doesn't exist");
@@ -315,7 +461,7 @@ private static String searchContact() {
 		Set<String> keys = appointList.keySet();
 		Iterator <String> it = keys.iterator();
 		try {
-			fout = new FileWriter(appointment);
+			FileWriter fout = new FileWriter(appointment);
 			while(it.hasNext()) {
 				String title = it.next();
 				Appointment appoint = new Appointment();
@@ -330,8 +476,7 @@ private static String searchContact() {
 		}
 	}
 	
-	private static String search_appointment() {
-		String title = scanner.nextLine();
+	public static String search_appointment(String title) {
 		if(appointList.get(title)==null) {
 			return "0";
 		}
@@ -341,17 +486,40 @@ private static String searchContact() {
 			return title;
 		}
 	}
-
 	//==============================main=====================================
 	public static void main_contact() {
 		
 	}
 	public static void main_todolist() {
-
+		String address = "c:\\Temp\\todoList.txt";
+		file_open(address);
+			while (true) {
+			System.out.print("1.Create, 2.View, 3.Update, 4.Delete, 5.Return to main >>");
+			int num = scanner.nextInt();
+			if (num >= 1 && num <= 5)
+				scanner.nextLine();
+			if (num == 1) { // 생성
+				if ( todoCreate()==1 )
+					System.out.println("create success");
+			} else if (num == 2) { // 보기
+				todoView();
+			} else if (num == 3) { // 수정
+				if ( todoUpdate()==1 )
+					System.out.println("update success");
+			} else if (num == 4) { // 삭제
+				if ( todoDelete()==1 )
+				System.out.println("delete success");
+			} else if (num == 5) { // 종료
+				file_store_todolist(address);
+				break;
+			}
+			file_store_todolist(address);	//file_open()이 while문 안에 있으면, 이 코드가 꼭 있어야 함
+			//지금은 file_open()이 while문 밖에 있으므로 꼭 필요한 문장은 아니지만, 비정상 종료를 막기 위해 존재
+		}
 	}
 	public static void main_appointment() {
 		while(true) {
-			System.out.print("1. Create, 2. View, 3. Update, 4. Delete, 5. Return to main >>");
+			System.out.print("1.Create, 2.View, 3.Update, 4.Delete, 5.Return to main >>");
 			int num = Integer.parseInt(scanner.nextLine());
 			file_open_appointment();
 			if(num == 1){
