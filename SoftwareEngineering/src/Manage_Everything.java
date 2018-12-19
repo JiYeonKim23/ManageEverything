@@ -264,7 +264,7 @@ public class Manage_Everything {
 		// 수정하고 싶은 것을 입력받은 후 결정
 		TodoList todoItem = HashMapTodoList.get(title);
 		System.out.println("1. Title, 2. Create date, 3. Due 4. Description");
-		System.out.print("Enter what ou want to update: ");
+		System.out.print("Enter what you want to update: ");
 		int num=Integer.parseInt(scanner.nextLine());	//왜 이렇게 바꿔야 하는 지 모르겠음
 		//int num = scanner.nextInt();		//오류 발생
 		if (num == 1) {
