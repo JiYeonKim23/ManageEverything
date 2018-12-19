@@ -50,7 +50,7 @@ public class Manage_Everything {
 	static HashMap<String, Contact> HashmapContact = new HashMap<String, Contact>();
 	static HashMap<String,Appointment> appointList = new HashMap<String, Appointment>();
 	static HashMap<String,TodoList> HashMapTodoList = new HashMap<String,TodoList>();
-    static String contact = "c:\\Temp\\contact.txt";
+    	static String contact = "c:\\Temp\\contact.txt";
 	static String appointment = "c:\\Temp\\appointment.txt";
 	//==============================contact=====================================
 	private static String searchContact() {
@@ -165,7 +165,7 @@ public class Manage_Everything {
 			scan.close();
 		}
 		catch(IOException e) {
-			System.out.println("파일 오픈 오류");
+			;
 		}
 	}
 	
