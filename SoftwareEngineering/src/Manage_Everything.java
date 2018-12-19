@@ -86,7 +86,7 @@ public class Manage_Everything {
 	}
 	
 	public static int contactDelete() {
-		System.out.println("Enter the name which you want to delete");
+		System.out.println("Enter the name of contact which you want to delete");
 		String name = searchContact();
 		if ( name=="0") {
 			System.out.println("That contact doesn't exist");
@@ -119,7 +119,7 @@ public class Manage_Everything {
 	}
 	
 	public static int contactUpdate() {
-		System.out.println("Enter the name which you want to update");
+		System.out.println("Enter the name of contact which you want to update");
 		String name = searchContact();
 		Contact contact = new Contact();
 		if (name == "0") {
