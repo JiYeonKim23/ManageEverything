@@ -205,23 +205,20 @@ public class Manage_Everything {
 	}
 	
 	//==============================todoList=====================================
-	private static String todoSearch() {	//검색 >>delete,update
-		System.out.print("Title: ");
-		String name = scanner.nextLine();
-		if (HashMapTodoList.get(name)==null) { //해당 이름이 없을 경우
+	public static String todoSearch(String name) {	//>>delete,update
+		if (HashMapTodoList.get(name)==null) { 
 			System.out.println("That to-do list doesn't exist");
 			return "0";
 		}
-		else {
+		else
 			return name;
-		}
 	}
 	
-	public static int todoCreate() {	 //성공 시 1 반환 , 실패 시 0 반환
+	public static int todoCreate() {
 		TodoList todoItem = new TodoList();
 		System.out.print("Title: ");
 		String name = scanner.nextLine();
-		if (HashMapTodoList.get(name)==null)	// 중복되지 않는다면
+		if (HashMapTodoList.get(name)==null)	
 			todoItem.setTitle(name);
 		else {
 			System.out.println("That title already exists.");
@@ -237,13 +234,26 @@ public class Manage_Everything {
 		return 1;
 	}
 	
-	public static int todoDelete() {	//성공 시 1 반환, 실패 시 0 반환
-		String title = todoSearch();
-		if ( title=="0")//없다면
+	public static Boolean todoDeleteAndCheck(String title) {
+		HashMapTodoList.remove(title);
+		if (HashMapTodoList.get(title)==null)
+			return true;
+		else
+			return false;
+	}
+	
+	public static int todoDelete() {	
+		System.out.print("Title: ");
+		String title = scanner.nextLine();
+		title = todoSearch(title);
+		if ( title=="0")
 			return 0;
 		else {
-			HashMapTodoList.remove(title);
-			return 1;
+			Boolean result = todoDeleteAndCheck(title);
+			if ( result == true)
+				return 1;
+			else
+				return 0;
 		}
 	}
 	public static void todoView() {
@@ -263,16 +273,17 @@ public class Manage_Everything {
 		} while (num!=0);
 	}
 
-	public static int todoUpdate() { // 성공 시 1 반환, 실패 시 0 반환
-		String title = todoSearch();
-		if (title == "0")// 없다면
+	public static int todoUpdate() { 
+		System.out.print("Title: ");
+		String title = scanner.nextLine();
+		title = todoSearch(title);
+		if (title == "0")
 			return 0;
-		// 수정하고 싶은 것을 입력받은 후 결정
 		TodoList todoItem = HashMapTodoList.get(title);
 		System.out.println("1. Title, 2. Create date, 3. Due 4. Description");
 		System.out.print("Enter what you want to update: ");
-		int num=Integer.parseInt(scanner.nextLine());	//왜 이렇게 바꿔야 하는 지 모르겠음
-		//int num = scanner.nextInt();		//오류 발생
+		int num=Integer.parseInt(scanner.nextLine());	
+		
 		if (num == 1) {
 			System.out.println("Title: ");
 			String updated_title = scanner.nextLine();	
@@ -316,7 +327,6 @@ public class Manage_Everything {
 				fout.write("\r\n", 0, 2);
 			}
 			fout.close();
-			// System.out.println(address+"에 저장되었습니다.");
 		} catch (Exception e) {
 			return;
 		}
@@ -334,14 +344,11 @@ public class Manage_Everything {
 				item.setCreate_date(st.nextToken());
 				item.setDue(st.nextToken());
 				item.setDescription(st.nextToken());
-				//item.setDescription(Integer.parseInt(st.nextToken()));
 				HashMapTodoList.put(item.getTitle(), item);
 			}
 			scan.close();
-			//System.out.println(address+"로부터 정보를 불러왔습니다.");
 		}
 		catch(IOException e) {
-			//System.out.println("입출력오류");
 		}
 	}
 	//==============================Appointment=====================================
@@ -501,15 +508,15 @@ public class Manage_Everything {
 			int num = scanner.nextInt();
 			file_open_contact();
 			
-			if (num == 1) { // 생성
+			if (num == 1) {
 				contactCreate();
-			} else if (num == 2) { // 보기
+			} else if (num == 2) { 
 				contactView();
-			} else if (num == 3) { // 수정
+			} else if (num == 3) {
 				contactUpdate();
-			} else if (num == 4) { // 삭제
+			} else if (num == 4) { 
 				contactDelete();
-			} else if (num == 5) { // 종료
+			} else if (num == 5) {
 				file_store_contact();
 				break;
 			}
@@ -524,23 +531,22 @@ public class Manage_Everything {
 			int num = scanner.nextInt();
 			if (num >= 1 && num <= 5)
 				scanner.nextLine();
-			if (num == 1) { // 생성
+			if (num == 1) { 
 				if ( todoCreate()==1 )
 					System.out.println("create success");
-			} else if (num == 2) { // 보기
+			} else if (num == 2) { 
 				todoView();
-			} else if (num == 3) { // 수정
+			} else if (num == 3) {
 				if ( todoUpdate()==1 )
 					System.out.println("update success");
-			} else if (num == 4) { // 삭제
+			} else if (num == 4) { 
 				if ( todoDelete()==1 )
 				System.out.println("delete success");
-			} else if (num == 5) { // 종료
+			} else if (num == 5) {
 				file_store_todolist(address);
 				break;
 			}
-			file_store_todolist(address);	//file_open()이 while문 안에 있으면, 이 코드가 꼭 있어야 함
-			//지금은 file_open()이 while문 밖에 있으므로 꼭 필요한 문장은 아니지만, 비정상 종료를 막기 위해 존재
+			file_store_todolist(address);	
 		}
 	}
 	public static void main_appointment() {
