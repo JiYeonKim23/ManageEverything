@@ -88,9 +88,9 @@ public class Manage_Everything {
 	}
 	
 	public static int contactDelete() {
-		System.out.print("Enter the name of contact which you want to delete>>");
+		System.out.print("name>>");
 		boolean existence;
-		String name = scanner.next();
+		String name = scanner.nextLine();
 		if (HashmapContact.get(name)==null) 
 			existence = false;
 		else
@@ -126,15 +126,15 @@ public class Manage_Everything {
 		
 		System.out.print("Enter 0 >> ");
 		
-		while((num = scanner.nextInt())!=0) {
+		while((num = Integer.parseInt(scanner.nextLine()))!=0) {
 			System.out.print("Enter 0 >> ");
 			continue;
 		}
 	}
 	
 	public static int contactUpdate() {
-		System.out.print("Enter the name of contact which you want to update>>");
-		String name = scanner.next();
+		System.out.print("name>>");
+		String name =scanner.nextLine();
 		
 		if (HashmapContact.get(name)==null) {
 			System.out.println("That contact doesn't exist");
@@ -143,21 +143,21 @@ public class Manage_Everything {
 		
 		Contact contact = new Contact();
 		System.out.print("1. Name, 2. Phone number, 3. E-mail >>");
-		int num = scanner.nextInt();
+		int num = Integer.parseInt(scanner.nextLine());
 		System.out.print("Enter what you want to update: ");
 		
 		if (num == 1) {
-			String new_name = scanner.next();
+			String new_name = scanner.nextLine();
 			contact = HashmapContact.get(name);
 			contact.setName(new_name);
 			HashmapContact.put(new_name, contact);
 			HashmapContact.remove(name);
 		} else if (num == 2) {
-			String new_number = scanner.next();		
+			String new_number = scanner.nextLine();		
 			contact = HashmapContact.get(name);
 			contact.setNumber(new_number);
 		} else if (num == 3) {
-			String new_email = scanner.next();
+			String new_email = scanner.nextLine();
 			contact = HashmapContact.get(name);
 			contact.setEmail(new_email);
 		}
@@ -539,18 +539,18 @@ public class Manage_Everything {
 	public static void main_contact() {
 		while (true) {
 			System.out.print("1.Create, 2.View, 3.Update, 4.Delete, 5.Return to main >>");
-			int num = scanner.nextInt();
+			int num = Integer.parseInt(scanner.nextLine());
 			file_open_contact();
 			
-			if (num == 1) {
+			if (num == 1) { // 생성
 				contactCreate();
-			} else if (num == 2) { 
+			} else if (num == 2) { // 보기
 				contactView();
-			} else if (num == 3) {
+			} else if (num == 3) { // 수정
 				contactUpdate();
-			} else if (num == 4) { 
+			} else if (num == 4) { // 삭제
 				contactDelete();
-			} else if (num == 5) {
+			} else if (num == 5) { // 종료
 				file_store_contact();
 				break;
 			}
