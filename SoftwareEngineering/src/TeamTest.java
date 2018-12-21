@@ -75,4 +75,9 @@ class TeamTest {
 		Manage_Everything m = new Manage_Everything();
 		assertTrue(m.todoDeleteAndCheck("NoYeon"));
 	}
+	
+	void testTodolistUpdateSuccess() {
+		Manage_Everything m = new Manage_Everything();
+		assertFalse(m.todoCheckUpdateSuccess("JiYeon","changed",2));
+	}
 }

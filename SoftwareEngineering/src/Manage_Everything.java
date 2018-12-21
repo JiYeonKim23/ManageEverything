@@ -272,45 +272,79 @@ public class Manage_Everything {
 			num=scanner.nextInt();
 		} while (num!=0);
 	}
+	
+	public static Boolean todoCheckUpdateSuccess(String title, String updatedSentence, int index) {
+		boolean existence = title.equals(todoSearch(title));
+		TodoList todoItem = HashMapTodoList.get(title);
+		
+		if ( existence == false )
+			return false;
+		else if ( index == 2 ) {
+			String createDateOftodoItem = todoItem.getCreate_date();
+			if ( createDateOftodoItem.equals(updatedSentence) )
+				return true;
+		}
+		else if ( index == 3) {
+			String dueDateOftodoItem = todoItem.getDue();
+			if ( dueDateOftodoItem.equals(updatedSentence) )
+				return true;			
+		}
+		else if ( index == 4) {
+			String descriptionOftodoItem = todoItem.getDescription();
+			if ( descriptionOftodoItem.equals(updatedSentence) )
+				return true;			
+		}
+		return false;
+	}
 
 	public static int todoUpdate() { 
-		System.out.print("Title: ");
+		System.out.print("Title that you want to update: ");
 		String title = scanner.nextLine();
 		title = todoSearch(title);
 		if (title == "0")
 			return 0;
 		TodoList todoItem = HashMapTodoList.get(title);
+		System.out.print("        ");
 		System.out.println("1. Title, 2. Create date, 3. Due 4. Description");
 		System.out.print("Enter what you want to update: ");
 		int num=Integer.parseInt(scanner.nextLine());	
-		
+		Boolean check=false;
 		if (num == 1) {
-			System.out.println("Title: ");
+			System.out.print("Title: ");
 			String updated_title = scanner.nextLine();	
 			todoItem.setTitle(updated_title);
 			HashMapTodoList.remove(title);
 			HashMapTodoList.put(updated_title, todoItem);
+			if ( updated_title.equals( todoSearch(updated_title) ) )
+				check = true;
+			else
+				check = false;
 		} else if (num == 2) {
-			System.out.println("Create Date: ");
+			System.out.print("Create Date: ");
 			String createDate = scanner.nextLine();
 			todoItem.setCreate_date(createDate);
 			HashMapTodoList.remove(title);
 			HashMapTodoList.put(title,todoItem);
+			check = todoCheckUpdateSuccess(title, createDate, 2);
 		} else if (num == 3) {
-			System.out.println("Due date: ");
+			System.out.print("Due date: ");
 			String updated_due = scanner.nextLine();
 			todoItem.setDue(updated_due);
 			HashMapTodoList.remove(title);
 			HashMapTodoList.put(title,todoItem);
-			
+			check = todoCheckUpdateSuccess(title,updated_due,3);			
 		} else if (num == 4) {
-			System.out.println("Description: ");
+			System.out.print("Description: ");
 			String updated_description = scanner.nextLine();
 			todoItem.setDescription(updated_description);
 			HashMapTodoList.remove(title);
 			HashMapTodoList.put(title,todoItem);
+			check = todoCheckUpdateSuccess(title,updated_description,4);
 		}
-		return 1;
+		if ( check == true)
+			return 1;
+		else
+			return 0;
 	}
 	
 	private static void file_store_todolist(String address) {
