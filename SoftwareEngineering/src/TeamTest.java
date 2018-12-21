@@ -60,9 +60,9 @@ class TeamTest {
 	}
 	
 	@Test
-	void testContactExistence() {
+	void testContactSearch() {
 		Manage_Everything m = new Manage_Everything();
-		assertTrue(m.checkContactExistence("Julia"));
+		assertEquals("Julia", m.contactSearch("Julia"));
 	}
 	
 	@Test
