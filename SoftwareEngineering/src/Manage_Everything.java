@@ -1,4 +1,4 @@
-import java.util.*;
+﻿import java.util.*;
 import java.io.*;
 
 class Contact {
@@ -304,7 +304,6 @@ public class Manage_Everything {
 		if (title == "0")
 			return 0;
 		TodoList todoItem = HashMapTodoList.get(title);
-		System.out.print("        ");
 		System.out.println("1. Title, 2. Create date, 3. Due 4. Description");
 		System.out.print("Enter what you want to update: ");
 		int num=Integer.parseInt(scanner.nextLine());	
@@ -542,49 +541,53 @@ public class Manage_Everything {
 			int num = Integer.parseInt(scanner.nextLine());
 			file_open_contact();
 			
-			if (num == 1) { // 생성
+			if (num == 1) { 
 				contactCreate();
-			} else if (num == 2) { // 보기
+			} else if (num == 2) { 
 				contactView();
-			} else if (num == 3) { // 수정
+			} else if (num == 3) { 
 				contactUpdate();
-			} else if (num == 4) { // 삭제
+			} else if (num == 4) { 
 				contactDelete();
-			} else if (num == 5) { // 종료
+			} else if (num == 5) { 
 				file_store_contact();
 				break;
 			}
 			file_store_contact();
+			System.out.println("");
 		}
 	}
+
 	public static void main_todolist() {
 		String address = "c:\\Temp\\todoList.txt";
 		file_open_todolist(address);
-			while (true) {
+		while (true) {
 			System.out.print("1.Create, 2.View, 3.Update, 4.Delete, 5.Return to main >>");
 			int num = scanner.nextInt();
 			if (num >= 1 && num <= 5)
 				scanner.nextLine();
-			if (num == 1) { 
-				if ( todoCreate()==1 )
+			if (num == 1) {
+				if (todoCreate() == 1)
 					System.out.println("create success");
-			} else if (num == 2) { 
+			} else if (num == 2) {
 				todoView();
 			} else if (num == 3) {
-				if ( todoUpdate()==1 )
+				if (todoUpdate() == 1)
 					System.out.println("update success");
-			} else if (num == 4) { 
-				if ( todoDelete()==1 )
-				System.out.println("delete success");
+			} else if (num == 4) {
+				if (todoDelete() == 1)
+					System.out.println("delete success");
 			} else if (num == 5) {
 				file_store_todolist(address);
 				break;
 			}
-			file_store_todolist(address);	
+			file_store_todolist(address);
+			System.out.println("");
 		}
 	}
+
 	public static void main_appointment() {
-		while(true) {
+		while (true) {
 			System.out.print("1.Create, 2.View, 3.Update, 4.Delete, 5.Return to main >>");
 			int num = Integer.parseInt(scanner.nextLine());
 			file_open_appointment();
@@ -605,25 +608,35 @@ public class Manage_Everything {
 				break;
 			}
 			file_store_appointment();	
+			System.out.println("");
 		}
-
-
 	}
 
 	//===================================================================
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		while(true) {
+			System.out.println("==================================MAIN MENU===================================");
 			System.out.print("1. Manage contact, 2. Manage to do list, 3. Manage appointment, 4. Exit >>");
 			int num = Integer.parseInt(scanner.nextLine());
-			if ( num==1)
+			if ( num==1) {
+				System.out.println("");
+				System.out.println("==================================manage contact===================================");
 				main_contact();
-			else if ( num==2 )
+			}
+			else if ( num==2 ) {
+				System.out.println("");
+				System.out.println("==================================manage todolist===================================");
 				main_todolist();
-			else if ( num==3 )
+			}
+			else if ( num==3 ) {
+				System.out.println("");
+				System.out.println("==================================manage appoint===================================");
 				main_appointment();
+			}
 			else if ( num==4 )
 				break;
+			System.out.println("");
 		}
 	}
 }
