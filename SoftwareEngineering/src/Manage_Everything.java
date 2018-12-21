@@ -50,20 +50,16 @@ public class Manage_Everything {
 	static HashMap<String, Contact> HashmapContact = new HashMap<String, Contact>();
 	static HashMap<String,Appointment> appointList = new HashMap<String, Appointment>();
 	static HashMap<String,TodoList> HashMapTodoList = new HashMap<String,TodoList>();
-    static String contact = "c:\\Temp\\contact.txt";
+    	static String contact = "c:\\Temp\\contact.txt";
 	static String appointment = "c:\\Temp\\appointment.txt";
 	//==============================contact=====================================
-	private static Boolean searchContact() {
-		String name = scanner.nextLine();
-		
-		return checkContactExistence(name);
-	}
-	
-	public static boolean checkContactExistence(String name) {
-		if (HashmapContact.get(name)==null) 
-			return false;
+	public static String contactSearch(String name) {	
+		if (HashmapContact.get(name)==null) { 
+			System.out.println("That contact doesn't exist");
+			return "0";
+		}
 		else
-			return true;
+			return name;
 	}
 	
 	public static int contactCreate() {
@@ -133,15 +129,14 @@ public class Manage_Everything {
 	}
 	
 	public static int contactUpdate() {
-		System.out.print("name>>");
+		System.out.print("Contact that you want to update>>");
 		String name =scanner.nextLine();
+		name = contactSearch(name);
 		
-		if (HashmapContact.get(name)==null) {
-			System.out.println("That contact doesn't exist");
+		if (name == "0")
 			return 0;
-		}
 		
-		Contact contact = new Contact();
+		Contact contact = HashmapContact.get(name);
 		System.out.print("1. Name, 2. Phone number, 3. E-mail >>");
 		int num = Integer.parseInt(scanner.nextLine());
 		System.out.print("Enter what you want to update: ");
